@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+./robots.py < input_robot > output_robot

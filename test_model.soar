@@ -1,0 +1,659 @@
+# initialization
+
+sp {init-robot-propose
+  (state <s> ^superstate nil
+             -^name)
+-->
+  (<s> ^operator <o> +)
+  (<o> ^name init-system)
+}
+ 
+sp {init-robot
+  (state <s> ^operator <o>
+             ^io <io>)
+  (<io> ^output-link <ol>)
+  (<o> ^name init-system)
+-->
+  (<s> ^problem-space wheelchair 
+       ^name robot-state
+       ^signs <sg>)
+  (<sg> ^s <me>
+         <dir_n> <dir_s> <dir_w> <dir_e>
+         <dir_ne> <dir_nw> <dir_sw> <dir_se>
+	 <dir_f> <dir_b> <dir_l> <dir_r>)
+  (<me> ^ki:track_id ki:me
+        ^rdf:type ki:robot
+        ^ki:task ki:no)
+  (<dir_n> ^ki:track_id ki:dir_north
+           ^ki:value ki:dir_north
+           ^rdf:type ki:direction)
+  (<dir_s> ^ki:track_id ki:dir_south
+           ^ki:value ki:dir_south
+           ^rdf:type ki:direction)
+  (<dir_w> ^ki:track_id ki:dir_west
+            ^ki:value ki:dir_west
+           ^rdf:type ki:direction)
+  (<dir_e> ^ki:track_id ki:dir_east
+           ^ki:value ki:dir_east
+           ^rdf:type ki:direction)
+  (<dir_ne> ^ki:track_id ki:dir_north_east
+            ^ki:value ki:dir_north_east
+            ^rdf:type ki:direction)
+  (<dir_nw> ^ki:track_id ki:dir_north_west
+            ^ki:value ki:dir_north_west
+            ^rdf:type ki:direction)
+  (<dir_sw> ^ki:track_id ki:dir_south_west
+            ^ki:value ki:dir_south_west
+            ^rdf:type ki:direction)
+  (<dir_se> ^ki:track_id ki:dir_south_east
+            ^ki:value ki:dir_south_east
+            ^rdf:type ki:direction)
+  (<dir_f> ^ki:track_id ki:dir_forward
+           ^ki:value ki:dir_forward
+           ^rdf:type ki:direction)
+  (<dir_b> ^ki:track_id ki:dir_backward
+           ^ki:value ki:dir_backward
+           ^rdf:type ki:direction)
+  (<dir_l> ^ki:track_id ki:dir_left
+           ^ki:value ki:dir_left
+           ^rdf:type ki:direction)
+  (<dir_r> ^ki:track_id ki:dir_right
+           ^ki:value ki:dir_right
+           ^rdf:type ki:direction)
+  (<ol> ^status initialisation)
+  
+}
+
+# known objects
+sp {expand-object-definition
+  :o-support
+  (state <s> ^signs.s <obj>)
+  (<obj> ^ rdf:type << ki:tree ki:rock ki:house ki:barrier ki:forest ki:human ki:pit ki:butte ki:lamp_post ki:car >> )
+  -(<obj> ^ rdf:type ki:object)
+-->
+  (<obj> ^rdf:type ki:object)
+}
+
+sp {expand-tree-definition
+  :o-support
+  (state <s> ^signs.s <obj>)
+  (<obj> ^ rdf:type ki:broken_tree )
+  -(<obj> ^rdf:type ki:tree)
+-->
+  (<obj> ^rdf:type ki:tree)
+}
+
+# input: read input data
+
+sp {read-object
+  :o-support
+  (state <s> ^io <io>
+             ^signs <signs>)
+  (<io> ^input-link <il>)
+  (<il> ^data <d>)
+  (<d> ^var-data <vd>)
+  (<vd> ^ki:track_id <inner_name>)
+  -(<s> ^signs.s.ki:track_id <inner_name>)
+-->
+  (<signs> ^s <obj>)
+  (<obj> ^ki:track_id <inner_name>)
+}
+
+sp {read-object-param
+  :o-support
+  (state <s> ^io <io>
+             ^signs.s <obj>)
+  (<io> ^input-link <il>)
+  (<il> ^data <d>)
+  (<d> ^var-data <vd>)
+  (<vd> ^ki:track_id <inner_name>)
+  (<obj> ^ki:track_id <inner_name>)
+  (<vd> ^{<param> <> ki:coord <> ki:nearest_from_type <> ki:in_front_of <> ki:to_left_from <> ki:behind_of <> ki:to_right_from <> ki:to_east_from <> ki:to_north_from <> ki:to_west_from <> ki:to_south_from <> ki:near <> ki:between } <param-value>)
+  -(<obj> ^<param> <param-value>)
+-->
+  (<obj> ^<param> <param-value>)
+}
+
+
+sp {read-object-relations
+  (state <s> ^io <io>
+             ^signs.s <obj>)
+  (<io> ^input-link <il>)
+  (<il> ^data <d>)
+  (<d> ^var-data <vd>)
+  (<vd> ^ki:track_id <inner_name>)
+  (<obj> ^ki:track_id <inner_name>)
+  (<vd> ^{<< ki:in_front_of ki:to_left_from ki:behind_of ki:to_right_from ki:to_east_from ki:to_north_from ki:to_west_from ki:to_south_from ki:near ki:between ki:coord ki:nearest_from_type >> <param> } <param-value>)
+-->
+  (<obj> ^<param> <param-value>)
+}
+
+
+# object removing
+
+sp {delete-object-param
+  :o-support
+  (state <s> ^io <io>
+             ^signs.s <obj>)
+  (<io> ^input-link <il>)
+  (<il> ^remove <rd>)
+  (<rd> ^ki:track_id <inner_name>)
+  (<obj> ^ki:track_id <inner_name>)
+  (<rd> ^<param> <param-value>)
+  (<obj> ^<param> <param-value>)
+-->
+  (<obj> ^<param> <param-value> -)
+}
+
+sp {delete-completed-action
+ :o-support
+  (state <s> ^signs <sgns>)
+  (<sgns> ^s <act> <me>)
+  (<me> ^ki:track_id ki:me
+        ^ki:completed <action_id>
+        ^ki:task {<task> <> ki:no})
+  (<act> ^ki:track_id <action_id>)
+-->
+  (<sgns> ^s <act> -)
+  (<me> ^ki:completed <action_id> -)
+}
+
+sp {delete-removed-objects
+ :o-support
+  (state <s> ^signs <sgns>)
+  (<sgns> ^s <obj>)
+  (<obj> -^ki:track_id)
+-->
+  (<sgns> ^s <obj> -)
+}
+
+
+# special transformations
+
+sp {read-action
+  (state <s> ^io <io>)
+  (<io> ^input-link <il>)
+  (<il> ^action <d>)
+  (<d> ^var-data <vd>)
+  (<vd> ^ rdf:type << ki:action ki:delayed_action >>)
+  (<vd> ^ki:track_id <inner_name>)
+-->
+  (<s> ^potential-acts <act>)
+  (<act> ^ki:track_id <inner_name>)
+}
+
+sp {read-action-param
+  (state <s> ^io <io>
+             ^potential-acts <act>)
+  (<io> ^input-link <il>)
+  (<il> ^action <d>)
+  (<d> ^var-data <vd>)
+  (<vd> ^ki:track_id <inner_name>)
+  (<act> ^ki:track_id <inner_name>)
+  (<vd> ^<param> <param-value>)
+-->
+  (<act> ^<param> <param-value>)
+}
+
+# correctness check for all kinds of potential actions
+
+sp {stop-action-correct
+  (state <s> ^potential-acts <act>
+             ^signs.s <me>)
+  (<me> ^ki:track_id ki:me)
+  (<act> ^ki:action_type ki:stop)
+-->
+  (<me> ^can-execute-action <act-descr>)
+  (<act-descr> ^action <act>
+               ^patient ki:no)
+}
+
+sp {move-to-action-correct
+  (state <s> ^potential-acts <act>
+             ^signs.s <me> <obj-var>)
+  (<me> ^ki:track_id ki:me)
+  (<act> ^ki:action_type ki:move_to
+	     ^potential_patient <obj-var>)
+  (<obj-var> ^rdf:type << ki:object ki:point >>
+             ^ki:coord <coord>)
+-->
+  (<me> ^can-execute-action <act-descr>)
+  (<act-descr> ^action <act>
+               ^patient <obj-var>)
+}
+
+sp {move-dir-action-correct
+  (state <s> ^potential-acts <act>
+             ^signs.s <me>
+	     ^signs.s <dir>)
+  (<me> ^ki:track_id ki:me)
+  (<dir> ^rdf:type ki:direction)
+  (<act> ^ki:action_type ki:move_dir
+         ^potential_patient <dir>)
+-->
+  (<me> ^can-execute-action <act-descr>)
+  (<act-descr> ^action <act>
+               ^patient <dir>)
+}
+
+sp {rotate-dir-action-correct
+  (state <s> ^potential-acts <act>
+             ^signs.s <me> <dir>)
+  (<me> ^ki:track_id ki:me)
+  (<dir> ^rdf:type ki:direction)
+  (<act> ^ki:action_type ki:rotate_dir
+         ^potential_patient <dir>)
+-->
+  (<me> ^can-execute-action <act-descr>)
+  (<act-descr> ^action <act>
+               ^patient <dir>)
+}
+
+sp {move-on-action-correct
+  (state <s> ^potential-acts <act>
+             ^signs.s <me> <dir>)
+  (<me> ^ki:track_id ki:me)
+  (<dir> ^rdf:type ki:direction)
+  (<act> ^ki:action_type ki:move_on
+         ^potential_patient <dir>
+         ^ki:numeric_value <dist>)
+-->
+  (<me> ^can-execute-action <act-descr>)
+  (<act-descr> ^action <act>
+               ^patient <dir>)
+}
+
+sp {rotate-on-action-correct
+  (state <s> ^potential-acts <act>
+             ^signs.s <me> <dir>)
+  (<me> ^ki:track_id ki:me)
+  (<dir> ^rdf:type ki:direction)
+  (<act> ^ki:action_type ki:rotate_on
+         ^potential_patient <dir>
+         ^ki:numeric_value <dist>)
+-->
+  (<me> ^can-execute-action <act-descr>)
+  (<act-descr> ^action <act>
+               ^patient <dir>)
+}
+
+sp {patrol-action-correct
+  (state <s> ^potential-acts <act>
+             ^signs.s <me>)
+  (<me> ^ki:track_id ki:me)
+  (<act> ^ki:action_type ki:patrol)
+-->
+  (<me> ^can-execute-action <act-descr>)
+  (<act-descr> ^action <act>
+               ^patient ki:no)
+}
+
+sp {find-action-correct
+  (state <s> ^potential-acts <act>
+             ^signs.s <me>)
+  (<me> ^ki:track_id ki:me)
+  (<act> ^ki:action_type ki:find)
+-->
+  (<me> ^can-execute-action <act-descr>)
+  (<act-descr> ^action <act>
+               ^patient ki:no)
+}
+
+sp {take-photo-action-correct
+  (state <s> ^potential-acts <act>
+             ^signs.s <me>)
+  (<me> ^ki:track_id ki:me)
+  (<act> ^ki:action_type ki:take_photo)
+-->
+  (<me> ^can-execute-action <act-descr>)
+  (<act-descr> ^action <act>
+               ^patient ki:no)
+}
+
+sp {analyze-action-correct
+  (state <s> ^potential-acts <act>
+             ^signs.s <me> <obj-var>)
+  (<me> ^ki:track_id ki:me)
+  (<act> ^ki:action_type ki:analyze
+	     ^potential_patient <obj-var>)
+  (<obj-var> ^rdf:type ki:object
+             ^ki:coord <coord>)
+-->
+  (<me> ^can-execute-action <act-descr>)
+  (<act-descr> ^action <act>
+               ^patient <obj-var>)
+}
+
+sp {follow-action-correct
+  (state <s> ^potential-acts <act>
+             ^signs.s <me> <obj-var>)
+  (<me> ^ki:track_id ki:me)
+  (<act> ^ki:action_type ki:follow
+	     ^potential_patient <obj-var>)
+  (<obj-var> ^rdf:type ki:object
+             ^ki:coord <coord>)
+-->
+  (<me> ^can-execute-action <act-descr>)
+  (<act-descr> ^action <act>
+               ^patient <obj-var>)
+}
+
+# prioritize actions
+
+sp { has-actions-to-start-without-patient
+  (state <s> ^problem-space wheelchair
+             ^signs.s <me>)
+  (<me> ^ki:track_id ki:me
+        ^can-execute-action <act-descr>)
+  (<act-descr> -^patient)
+-->
+  (<act-descr> ^priority 10)
+}
+
+sp { has-actions-to-start-with-nearest-patient
+  (state <s> ^problem-space wheelchair
+             ^potential-acts <act>
+             ^signs.s <me>)
+  (<me> ^ki:track_id ki:me
+        ^can-execute-action <act-descr>)
+  (<act-descr> ^patient <patient>)
+  (<patient> ^ki:nearest_from_type <tp>)
+  (<patient> -^ki:has_gaze_on)
+-->
+  (<act-descr> ^priority 12)
+}
+
+sp { has-actions-to-start-with-patient-and-gaze
+  (state <s> ^problem-space wheelchair
+             ^potential-acts <act>
+             ^signs.s <me>)
+  (<me> ^ki:track_id ki:me
+        ^can-execute-action <act-descr>)
+  (<act-descr> ^patient <patient>)
+  (<patient> ^ki:has_gaze_on <tp>)
+-->
+  (<act-descr> ^priority 14)
+}
+
+sp { has-actions-to-start-with-ordinary-patient
+  (state <s> ^problem-space wheelchair
+             ^potential-acts <act>
+             ^signs.s <me>)
+  (<me> ^ki:track_id ki:me
+        ^can-execute-action <act-descr>)
+  (<act-descr> ^patient <patient>)
+  (<patient> -^ki:nearest_from_type)
+  (<patient> -^ki:has_gaze_on)
+-->
+  (<act-descr> ^priority 10)
+}
+
+
+sp { rule-start-action
+  (state <s> ^problem-space wheelchair
+             ^signs.s <me>)
+  (<me> ^ki:track_id ki:me
+        ^can-execute-action <act-descr>)
+  (<act-descr> ^priority <pri>)
+-->
+  (<s> ^operator <o> + =)
+  (<o> ^name start-action
+       ^action <act-descr>
+       ^priority <pri>)
+}
+
+sp { equalize-priotities
+ (state <s> ^operator <o1> <o2>)
+ (<o1> ^name start-action
+       ^action <act-descr1>
+       ^priority <pr1>)
+ (<o2> ^name start-action
+       ^action { <act-descr2> <> <act-descr1> }
+       ^priority <pr1>)
+-->
+ (<s> ^operator <o1> = <o2>)
+ (<s> ^operator <o2> = <o1>)
+}
+
+sp { non-equal-priotities
+ (state <s> ^operator <o1> <o2>)
+ (<o1> ^name start-action
+       ^action <act-descr1>
+       ^priority <pr1>)
+ (<o2> ^name start-action
+       ^action { <act-descr2> <> <act-descr1> }
+       ^priority { <pr2> > <pr1> } )
+-->
+ (<s> ^operator <o1> < <o2>)
+ (<s> ^operator <o2> > <o1>)
+}
+
+
+# choose action for execution
+
+sp {start-action-without-task
+  (state <s> ^operator <o>
+             ^signs <sgns>
+	         ^io <io>)
+  (<sgns> ^s <me>)
+  (<me> ^ki:track_id ki:me
+        ^ki:task ki:no)
+  (<o> ^name start-action
+       ^action <act-descr>)
+  (<act-descr> ^action <act>
+               ^patient <patient>)
+  (<act> ^ki:action_type <action-type>
+        ^ki:track_id <action-id>
+        -^ki:numeric_value)
+  (<io> ^output-link <ol>)
+  (<ol> ^status <last-status>)
+-->
+  (<sgns> ^s <action-node>)
+  (<me> ^ki:task <action-node>)
+  (<me> ^ki:task ki:no -)
+  (<action-node> ^rdf:type ki:action
+                 ^ki:action_type <action-type>
+                 ^ki:patient <patient>
+                 ^ki:track_id <action-id>)
+  (<ol> ^status <action-type>)
+  (<ol> ^status <last-status> -)
+}
+
+sp {start-action-without-task-with-num-value
+  (state <s> ^operator <o>
+             ^signs <sgns>
+	         ^io <io>)
+  (<sgns> ^s <me>)
+  (<me> ^ki:track_id ki:me
+        ^ki:task ki:no)
+  (<o> ^name start-action
+       ^action <act-descr>)
+  (<act-descr> ^action <act>
+               ^patient <patient>)
+  (<act> ^ki:action_type <action-type>
+        ^ki:track_id <action-id>
+        ^ki:numeric_value <num-value>)
+  (<io> ^output-link <ol>)
+  (<ol> ^status <last-status>)
+-->
+  (<sgns> ^s <action-node>)
+  (<me> ^ki:task <action-node>)
+  (<me> ^ki:task ki:no -)
+  (<action-node> ^rdf:type ki:action
+                 ^ki:action_type <action-type>
+                 ^ki:patient <patient>
+                 ^ki:track_id <action-id>
+                 ^ki:numeric_value <num-value>)
+  (<ol> ^status <action-type>)
+  (<ol> ^status <last-status> -)
+}
+
+sp {start-action-with-task
+  (state <s> ^operator <o>
+             ^signs <sgns>
+	         ^io <io>)
+  (<o> ^name start-action
+       ^action <act-descr>)
+  (<act-descr> ^action <act>
+               ^patient <patient>)
+  (<act> ^ki:track_id <action-id>
+         ^ki:action_type <action-type>
+         -^ki:numeric_value)
+  (<sgns> ^s <me> <old-task>)
+  (<me> ^ki:track_id ki:me
+        ^ki:task { <old-task> <> ki:no})
+  -(<old-task> ^ki:track_id <action-id>)
+  (<old-task> ^ki:track_id <old-action-id>)
+  (<io> ^output-link <ol>)
+  (<ol> ^status <last-status>)
+-->
+  (<sgns> ^s <action-node>)
+  (<me> ^ki:task <action-node>
+        ^ki:completed <old-action-id>)
+  (<me> ^ki:task <old-task> -)
+  (<action-node> ^rdf:type ki:action
+                 ^ki:action_type <action-type>
+                 ^ki:patient <patient>
+                 ^ki:track_id <action-id>)
+  (<ol> ^status <action-type>)
+  (<ol> ^status <last-status> -)
+}
+
+sp {start-action-with-task-and-num-value
+  (state <s> ^operator <o>
+             ^signs <sgns>
+	         ^io <io>)
+  (<o> ^name start-action
+       ^action <act-descr>)
+  (<act-descr> ^action <act>
+               ^patient <patient>)
+  (<act> ^ki:track_id <action-id>
+         ^ki:action_type <action-type>
+         ^ki:numeric_value <num-value>)
+  (<sgns> ^s <me> <old-task>)
+  (<me> ^ki:track_id ki:me
+        ^ki:task { <old-task> <> ki:no})
+  -(<old-task> ^ki:track_id <action-id>)
+  (<io> ^output-link <ol>)
+  (<ol> ^status <last-status>)
+-->
+  (<sgns> ^s <action-node>)
+  (<me> ^ki:task <action-node>
+        ^ki:completed <old-task>)
+  (<me> ^ki:task <old-task> -)
+  (<action-node> ^rdf:type ki:action
+                 ^ki:action_type <action-type>
+                 ^ki:patient <patient>
+                 ^ki:track_id <action-id>
+                 ^ki:numeric_value <num-value>)
+  (<ol> ^status <action-type>)
+  (<ol> ^status <last-status> -)
+}
+
+
+sp { propose-finish-action
+  (state <s> ^signs.s <me> <curr-action>)
+  (<me> ^ki:track_id ki:me
+        ^ki:finished <finished-action-track-id>
+        ^ki:task <curr-action>)
+  (<curr-action> ^ki:track_id <finished-action-track-id>)
+  -(<me> ^ki:completed <finished-action-track-id>)
+-->
+  (<s> ^operator <o>)
+  (<o> ^name finish-action
+       ^action <curr-action>)
+}
+
+sp { finish-action
+  (state <s> ^operator <o>
+             ^signs.s <me>)
+  (<o> ^name finish-action
+       ^action <curr-action>)
+  (<me> ^ki:track_id ki:me
+        ^ki:finished <finished-action-track-id>
+        ^ki:task <curr-action>)
+-->  
+  (<me> ^ki:task <curr-action> -)
+  (<me> ^ki:finished <finished-action-track-id> -)
+  (<me> ^ki:completed <finished-action-track-id>)
+  (<me> ^ki:task ki:no)
+}
+
+
+# delay
+
+sp {wait1-propose1
+  (state <s> ^problem-space wheelchair
+	     -^wait-sign
+	     ^signs.s <me>)
+  (<me> ^ki:track_id ki:me
+        -^can-execute-action)
+-->
+  (<s> ^operator <o> + < =)
+  (<o> ^name wait1)
+}
+
+sp {wait1-propose2
+  (state <s> ^problem-space wheelchair
+	     -^wait-sign
+	     ^signs.s <me> <act-sign>)
+  (<me> ^ki:track_id ki:me
+        ^can-execute-action <act-inner>
+        ^ki:task <act-sign>)
+  (<act-sign> ^ki:track_id <act-track-id>)
+  (<act-inner> ^action.ki:track_id <act-track-id>)
+-->
+  (<s> ^operator <o> + < =)
+  (<o> ^name wait1)
+}
+
+
+sp {wait1
+  (state <s> ^operator <o>
+	     ^io <io>)
+  (<io> ^output-link <ol>)
+  (<ol> ^status <last-status>)
+  (<o> ^name wait1)
+-->
+  (<s> ^wait-sign 1)
+  (<ol> ^status wait)
+  (<ol> ^status <last-status> -)
+}
+
+sp {wait2-propose1
+  (state <s> ^problem-space wheelchair
+             ^wait-sign <v>
+	         ^signs.s <me>)
+  (<me> ^ki:track_id ki:me
+        -^can-execute-action)
+-->
+  (<s> ^operator <o> + < =)
+  (<o> ^name wait2)
+}
+
+sp {wait2-propose2
+  (state <s> ^problem-space wheelchair
+             ^wait-sign <v>
+	         ^signs.s <me> <act-sign>)
+  (<me> ^ki:track_id ki:me
+        ^can-execute-action <act-inner>
+        ^ki:task <act-sign>)
+  (<act-sign> ^ki:track_id <act-track-id>)
+  (<act-inner> ^action.ki:track_id <act-track-id>)
+-->
+  (<s> ^operator <o> + < =)
+  (<o> ^name wait2)
+}
+
+sp {wait2
+  (state <s> ^operator <o>
+	     ^io <io>)
+  (<io> ^output-link <ol>)
+  (<ol> ^status <last-status>)
+  (<o> ^name wait2)
+-->
+  (<s> ^wait-sign 1 -)
+  (<ol> ^status wait)
+  (<ol> ^status <last-status> -)
+}
+

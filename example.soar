@@ -1,0 +1,32 @@
+sp {detect-dangerous-creature
+ (state <s> ^io <io>)
+ (<io> ^input-link <input>)
+ (<input> ^obj tiger)
+ -->
+ (<s> ^operator <d> +)
+ (<d> ^name danger)
+}
+
+sp {dangerous-creature-not-found
+ (state <s> ^io <io>)
+ (<io> ^input-link <input>)
+ -(<input> ^obj tiger)
+ -->
+ (<s> ^operator <s> +)
+ (<s> ^name safety)
+}
+
+
+sp { become-afraid
+    (state <s> ^operator <d>)
+    (<d> ^name danger)
+    -->
+    (<s> ^state danger)
+}
+
+sp { safety
+    (state <s> ^operator <s>)
+    (<s> ^name safety)
+    -->
+    (<s> ^state safety)
+}
