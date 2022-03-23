@@ -80,7 +80,6 @@ class Robot:
 '''__Questions__
 1. private and public atributes and methods?
 2. soar sentences?
-3. x, y together or apart?
 '''
     
 '''__class Group__
@@ -108,11 +107,11 @@ class Group:
             neibours.append(nb)
         return neibours
         
-    def take_desicion (self):
+    '''def take_desicion (self):
         for r in robots:
             xy = r.info_coord()
             
-        return 0
+        return 0'''
             
         
 '''Запуск
@@ -130,8 +129,8 @@ if __name__ == "__main__":      #use or not to use?
         line = input()
         if not line:
             break
-        vvod = line.split()
-        gr.robots.append(Robot(n, int(vvod[0]), int(vvod[1]), vvod[2]))
+        data = line.split()
+        gr.robots.append(Robot(n, int(data[0]), int(data[1]), data[2]))
         
     
     for r in gr.robots:
