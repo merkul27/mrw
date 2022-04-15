@@ -1,9 +1,9 @@
 (1, 2) w
-(-1, 0) w
-(20, 8) e
 [(0, 0), (-2, -2), (19, 6)]
 ['itself', 'south-west nearby', 'north-east away']
+(-1, 0) w
 [(2, 2), (0, 0), (21, 8)]
 ['north-east nearby', 'itself', 'north-east away']
+(20, 8) e
 [(-19, -6), (-21, -8), (0, 0)]
 ['south-west away', 'south-west away', 'itself']

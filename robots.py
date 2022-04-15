@@ -3,6 +3,9 @@
 Методы: Получение инфы от группы, перобразование в соар команды, передача инфы в соар, получение решение от соар и передача группе, вывод инфы о себе, инициализация
 Получает от Группы расположение объектов, пробразует соар отправляет, возвращает решение группе
 '''
+import sys
+sys.path.append('/opt/Soar/out')
+import Python_sml_ClientInterface as sml
 
 class Robot:
     #rob_count = 0
@@ -11,7 +14,7 @@ class Robot:
     def __init__(self, n, x, y, direct):
         self.num = n
         self.coord = (x, y) 
-        self.direct = direct
+        self.direct = direct # в градусах!
         #Robot.rob_count += 1;
         
     def soar_command_create(self, neibours):
@@ -135,7 +138,7 @@ if __name__ == "__main__":      #use or not to use?
     
     for r in gr.robots:
         print(r.info_coord(), r.info_direct())
-    for r in gr.robots:
+    #for r in gr.robots:
         neighbourhood = gr.get_neighbourhood(r)
         print(neighbourhood)
         print(r.soar_command_create(neighbourhood))

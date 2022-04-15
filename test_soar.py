@@ -49,8 +49,9 @@ size_link = agent.CreateStringWME(agent_link,
                                  # 'obj',
                                   #'tiger')
 squirell_link = agent.CreateStringWME(input_link,
-                                  'obj',
-                                  'squirell')
+                                  'obj'далеко близко,
+                                  'squirell'название робота)
+
 
 
 # execute processing
