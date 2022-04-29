@@ -1,11 +1,20 @@
 #!/usr/bin/env python3 
-'''__class Robot__
-Методы: Получение инфы от группы, перобразование в соар команды, передача инфы в соар, получение решение от соар и передача группе, вывод инфы о себе, инициализация
-Получает от Группы расположение объектов, пробразует соар отправляет, возвращает решение группе
-'''
+
 import sys
+# load Soar library
 sys.path.append('/opt/Soar/out')
 import Python_sml_ClientInterface as sml
+
+# function to print Soar output
+def cb_print_soar_message(mid, user_data, agent, message):
+    print(message.strip() + '\n')
+
+
+'''
+__class Robot__
+Methods: __init__; soar_command_create(take neibours and single robot, make soar_sentences); info_coord; info_direct; make_decision(take soar_sentences work with soar and return soar desicion); robot_movement(take soar decision and move single robot)
+'''
+
 
 class Robot:
     #rob_count = 0
@@ -24,54 +33,14 @@ class Robot:
         
         for nb in neibours:
             #print(nb)
+            d = self.direct
             z = (nb[0] ** 2 + nb[1] ** 2) ** (0.5)
+            nd =    #direct where is neibour 
             if z < 0:
                 print ("neibour distance error")
                 break
-            #print(z)
-            if nb[0] > 0 and nb[1] > 0:     # ./
-                if z <= big_dist:
-                    soar_sentences.append("north-east nearby")
-                elif z > big_dist:
-                    soar_sentences.append("north-east away")
-            elif nb[0] < 0 and nb[1] > 0:   # \.
-                if z <= big_dist:
-                    soar_sentences.append("north-west nearby")
-                elif z > big_dist:
-                    soar_sentences.append("north-west away")
-            elif nb[0] < 0 and nb[1] < 0:   # /'
-                if z <= big_dist:
-                    soar_sentences.append("south-west nearby")
-                elif z > big_dist:
-                    soar_sentences.append("south-west away")
-            elif nb[0] > 0 and nb[1] < 0:   # '\
-                if z <= big_dist:
-                    soar_sentences.append("south-east nearby")
-                elif z > big_dist:
-                    soar_sentences.append("south-east away")
-            elif nb[0] == 0 and nb[1] > 0: # .|
-                if nb[1] <= big_dist:
-                    soar_sentences.append("north nearby")
-                elif nb[1] > big_dist:
-                    soar_sentences.append("north away")
-            elif nb[0] == 0 and nb[1] < 0: # '|
-                if abs(nb[1]) <= big_dist:
-                    soar_sentences.append("south nearby")
-                elif abs(nb[1]) > big_dist:
-                    soar_sentences.append("south away")
-            elif nb[0] > 0 and nb[1] == 0: # .-
-                if nb[0] <= big_dist:
-                    soar_sentences.append("east nearby")
-                elif nb[0] > big_dist:
-                    soar_sentences.append("east away")
-            elif nb[0] < 0 and nb[1] == 0: # -.
-                if abs(nb[0]) <= big_dist:
-                    soar_sentences.append("west nearby")
-                elif abs(nb[0]) > big_dist:
-                    soar_sentences.append("west away")
-            elif nb[0] == 0 and nb[1] == 0: # .
-                soar_sentences.append("itself")
-        
+            
+            
         return soar_sentences;
         
     def info_coord(self):         
@@ -80,19 +49,42 @@ class Robot:
     def info_direct(self):        
         return self.direct
     
-'''__Questions__
-1. private and public atributes and methods?
-2. soar sentences?
-'''
+    def make_decision():
+        # create processing kernel
+        kernel = sml.Kernel.CreateKernelInCurrentThread()
+        agent = kernel.CreateAgent("agent")
+        
+        # add method to print debug messages from Soar
+        agent.RegisterForPrintEvent(sml.smlEVENT_PRINT,
+                            cb_print_soar_message,
+                            None)
+        agent.ExecuteCommandLine("watch 5")
+        agent.ExecuteCommandLine("source robots.soar")
+        agent.RunSelf(1)
+        input_link = agent.GetInputLink()
+        #LOOP with soar_command_create
+        agent.RunSelf(2)
+        output_link = agent.GetOutputLink()
+        if output_link != None:
+            try:
+                result_output_wme = output_link.FindByAttribute("target", 0)
+                target = result_output_wme.GetValueAsString()
+            except AttributeError:
+                print("error") #error
+        else:
+            print("error")
+        targets.append(target)
+        kernel.DestroyAgent(agent)
+        kernel.Shutdown()
+        
+    def robot_movement()
     
-'''__class Group__
-класс Группа.
-Атрибуты: Карта, Список роботов
-Методы: Читает данные карты, окрестности-расположение предметов (других роботов) относительно робота, передача роботу инфы, получение решение от робота, принятие решения по передвижению
+'''
+__class Group__
+Methods: get_neighbourhood(create neibours with coordinates in relation to one robot and direct); movement(take decisions from robots and take one move)
 '''
 
 class Group:
-    #karta = []
     robots = []
     
     #def __init__(self):
@@ -106,15 +98,11 @@ class Group:
     def get_neighbourhood(self, robot):
         neibours = []
         for r in self.robots:
-            nb = (r.coord[0] - robot.coord[0], r.coord[1] - robot.coord[1])
+            nb = (r.coord[0] - robot.coord[0], r.coord[1] - robot.coord[1], r.direct)
             neibours.append(nb)
         return neibours
-        
-    '''def take_desicion (self):
-        for r in robots:
-            xy = r.info_coord()
-            
-        return 0'''
+    
+    def movement(self) #take decisions from robots and take one move
             
         
 '''Запуск
