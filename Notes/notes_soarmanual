@@ -1,0 +1,27 @@
+(identifier ^attribute value) #WME
+
+(identifier ^attribute-1 value-1 ^attribute-2 value-2
+            ^attribute-3 value-3... ^attribute-n value-n)
+#object
+
+soar> print --internal S1
+(3: S1 ^io I1)
+#3 is timetag of production
+
+(identifier ^operator value +)
+#+ is preference
+
+(S1 ^operator O3 +)
+#is a preference that operator O3 is an acceptable operator for state S1
+(S1 ^operator O3 > O4)
+#is a preference that operator O3 is a better choice for the operator of state S1 than operator O4.
+
+sp {production-name
+    "Documentation string"
+    :type
+    CONDITIONS
+    -->
+    ACTIONS
+    }
+#production
+
