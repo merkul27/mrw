@@ -1,9 +1,9 @@
-(1, 2) w
-[(0, 0), (-2, -2), (19, 6)]
-['itself', 'south-west nearby', 'north-east away']
-(-1, 0) w
-[(2, 2), (0, 0), (21, 8)]
-['north-east nearby', 'itself', 'north-east away']
-(20, 8) e
-[(-19, -6), (-21, -8), (0, 0)]
-['south-west away', 'south-west away', 'itself']
+(1, 2) 20
+[(0, 0, 20), (-2, -2, 30), (19, 6, 180)]
+['itself', 'back-left nearby', 'front-right away']
+(-1, 0) 30
+[(2, 2, 20), (0, 0, 30), (21, 8, 180)]
+['front-right nearby', 'itself', 'front-right away']
+(20, 8) 180
+[(-19, -6, 20), (-21, -8, 30), (0, 0, 180)]
+['front-right away', 'front-right away', 'itself']

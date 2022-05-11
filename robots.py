@@ -1,13 +1,13 @@
 #!/usr/bin/env python3 
-
-import sys
+import math
+'''import sys
 # load Soar library
 sys.path.append('/opt/Soar/out')
 import Python_sml_ClientInterface as sml
 
 # function to print Soar output
 def cb_print_soar_message(mid, user_data, agent, message):
-    print(message.strip() + '\n')
+    print(message.strip() + '\n')'''
 
 
 '''
@@ -23,22 +23,67 @@ class Robot:
     def __init__(self, n, x, y, direct):
         self.num = n
         self.coord = (x, y) 
-        self.direct = direct # в градусах!
+        self.direct = direct # в градусах! [0,360)
         #Robot.rob_count += 1;
         
     def soar_command_create(self, neibours):
-        # neibours := list with distances to other robots 0x, 0y (include itself or not?)
+        # neibours := list with distances to other robots 0x, 0y (including itself)
         soar_sentences = []
         big_dist = 10
         
         for nb in neibours:
             #print(nb)
-            d = self.direct
+            d = int(self.direct)
             z = (nb[0] ** 2 + nb[1] ** 2) ** (0.5)
-            nd =    #direct where is neibour 
             if z < 0:
                 print ("neibour distance error")
                 break
+            x = nb[0] * math.cos(math.radians(d)) - nb[1] * math.sin(math.radians(d))
+            y = nb[0] * math.sin(math.radians(d)) + nb[1] * math.cos(math.radians(d))
+            #coordinates where is neibour относит взгляда робота матрица перехода турупупум 
+
+            if x > 0 and y > 0:     # ./
+                if z <= big_dist:
+                    soar_sentences.append("front-right nearby")
+                elif z > big_dist:
+                    soar_sentences.append("front-right away")
+            elif x < 0 and y > 0:   # \.
+                if z <= big_dist:
+                    soar_sentences.append("front-left nearby")
+                elif z > big_dist:
+                    soar_sentences.append("front-left away")
+            elif x < 0 and y < 0:   # /'
+                if z <= big_dist:
+                    soar_sentences.append("back-left nearby")
+                elif z > big_dist:
+                    soar_sentences.append("back-left away")
+            elif x > 0 and y < 0:   # '\
+                if z <= big_dist:
+                    soar_sentences.append("back-right nearby")
+                elif z > big_dist:
+                    soar_sentences.append("back-right away")
+            elif x == 0 and y > 0: # .|
+                if y <= big_dist:
+                    soar_sentences.append("front nearby")
+                elif y > big_dist:
+                    soar_sentences.append("front away")
+            elif x == 0 and y < 0: # '|
+                if abs(y) <= big_dist:
+                    soar_sentences.append("back nearby")
+                elif abs(y) > big_dist:
+                    soar_sentences.append("back away")
+            elif x > 0 and y == 0: # .-
+                if x <= big_dist:
+                    soar_sentences.append("right nearby")
+                elif x > big_dist:
+                    soar_sentences.append("right away")
+            elif x < 0 and y == 0: # -.
+                if abs(x) <= big_dist:
+                    soar_sentences.append("left nearby")
+                elif abs(x) > big_dist:
+                    soar_sentences.append("left away")
+            elif x == 0 and y == 0: # .
+                soar_sentences.append("itself")
             
             
         return soar_sentences;
@@ -77,7 +122,7 @@ class Robot:
         kernel.DestroyAgent(agent)
         kernel.Shutdown()
         
-    def robot_movement()
+    #def robot_movement()
     
 '''
 __class Group__
@@ -102,7 +147,7 @@ class Group:
             neibours.append(nb)
         return neibours
     
-    def movement(self) #take decisions from robots and take one move
+    #def movement(self) #take decisions from robots and take one move
             
         
 '''Запуск
@@ -121,7 +166,7 @@ if __name__ == "__main__":      #use or not to use?
         if not line:
             break
         data = line.split()
-        gr.robots.append(Robot(n, int(data[0]), int(data[1]), data[2]))
+        gr.robots.append(Robot(n, int(data[0]), int(data[1]), int(data[2])))
         
     
     for r in gr.robots:
