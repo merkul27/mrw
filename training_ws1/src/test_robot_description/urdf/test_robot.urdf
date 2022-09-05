@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="test_robot" >
+
+  <link name="base_link" />
+
+  <joint name="zero_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="body_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="body_link">
+    <visual>
+      <geometry>
+        <box size="0.3 0.2 0.1" />
+      </geometry>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <material name="blue">
+	    <color rgba="0 0 .8 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.3 0.2 0.1" />
+      </geometry>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="3"/>
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4"/>
+    </inertial>
+  </link>
+  
+  <link name="rwheel_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.01" radius="0.05"/>
+      </geometry>
+      <origin rpy="1.57 0 0" xyz="0 0 0"/>
+      <material name="black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.01" radius="0.5"/>
+      </geometry>
+      <origin rpy="1.57 0 0" xyz="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia izz="1e-5" ixy="0.0" ixz="0.0" ixx="1e-5" iyz="0.0" iyy="1e-5"/>
+    </inertial>
+  </link>
+  
+  <joint name="rwheel_j" type="continuous">
+    <origin xyz="0.1 0.12 0" rpy="0 0 0"/>
+    <parent link="body_link"/>
+    <axis xyz="0 1 0"/>
+    <child link="rwheel_link"/>
+  </joint>
+
+  <link name="caster_link">
+    <visual>
+      <geometry>
+        <sphere radius="0.02"/>
+      </geometry>
+      <material name="black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="0.02"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.05"/>
+      <inertia izz="1e-5" ixy="0.0" ixz="0.0" ixx="1e-5" iyz="0.0" iyy="1e-5"/>
+    </inertial>
+  </link>  
+  
+  <joint name="caster_j" type="fixed">
+    <origin xyz="-0.1 0 -0.03" rpy="0 0 0"/>
+    <parent link="body_link"/>
+    <child link="caster_link"/>
+  </joint>
+  
+</robot>

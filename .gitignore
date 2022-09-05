@@ -1,0 +1,13 @@
+*.pyc
+training_ws1/.catkin_tools/
+training_ws1/build/
+training_ws1/devel/
+training_ws1/logs/
+training_ws2/.catkin_tools/
+training_ws2/build/
+training_ws2/devel/
+training_ws2/logs/
+training_ws3/.catkin_tools/
+training_ws3/build/
+training_ws3/devel/
+training_ws3/logs/
