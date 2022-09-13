@@ -23,8 +23,19 @@ class Robot:
     def __init__(self, n, x, y, direct):
         self.num = n
         self.coord = (x, y) 
-        self.direct = direct # в градусах! [0,360)
+        self.direct = direct # в градусах! [0,360) полярные координаты??? [x,y] --> [r,fi] x=r*cos(fi), y=r*sin(fi) 
         #Robot.rob_count += 1;
+        # create processing kernel and agent
+        self.kernel = sml.Kernel.CreateKernelInCurrentThread()
+        self.agent = self.kernel.CreateAgent("agent")
+        
+        # add method to print debug messages from Soar
+        self.agent.RegisterForPrintEvent(sml.smlEVENT_PRINT,
+                            cb_print_soar_message,
+                            None)
+        self.agent.ExecuteCommandLine("watch 5")
+        self.agent.ExecuteCommandLine("source robots.soar")
+        self.agent.RunSelf(1)
         
     def soar_command_create(self, neibours):
         # neibours := list with distances to other robots 0x, 0y (including itself)
@@ -93,31 +104,33 @@ class Robot:
         return self.direct
     
     def make_decision(self, soar_sentences):
-        # create processing kernel
-        kernel = sml.Kernel.CreateKernelInCurrentThread()
-        agent = kernel.CreateAgent("agent")
         
-        # add method to print debug messages from Soar
-        agent.RegisterForPrintEvent(sml.smlEVENT_PRINT,
-                            cb_print_soar_message,
-                            None)
-        agent.ExecuteCommandLine("watch 5")
-        agent.ExecuteCommandLine("source robots.soar")
-        agent.RunSelf(1)
-        input_link = agent.GetInputLink()
+        print("working with r{}".format(self.num))
+        input_link = self.agent.GetInputLink()
         #LOOP with soar_command_create
-        data_link = agent.CreateIdWME(input_link, 'data')
         i = 0
+        #print(soar_sentences)
+        robot_links = []
         for s in soar_sentences:
+            if s == 'itself':
+                i += 1
+                continue
             w = s.split()
+            if len(w) < 2:
+                print('wrong status "{}"'.format(s))
+                continue
             word = w[1]
             i += 1
-            robot_link = agent.CreateStringWME(data_link,
+            r_link = self.agent.CreateStringWME(input_link,
                                                word, 
                                                'r' + str(i))
-        agent.RunSelf(2)
+            robot_links.append(r_link)
+        self.agent.RunSelf(2)
+        for r in robot_links:
+            self.agent.DestroyWME(r)
         target = "None"
-        output_link = agent.GetOutputLink()
+        output_link = self.agent.GetOutputLink()
+        
         if output_link != None:
             try:
                 result_output_wme = output_link.FindByAttribute("target", 0)
@@ -129,19 +142,18 @@ class Robot:
             #target = ""
             print("error")
         #targets.append(target)
-        kernel.DestroyAgent(agent)
-        kernel.Shutdown()
+        print(target)
+        #kernel.Shutdown()
         return target
-        
-    def robot_move(self, move):    #move one robot one step
-        if 
+        #move one robot one step
+  
     
 '''
 __class Group__
 Methods: get_neighbourhood(create neibours with coordinates in relation to one robot and direct); process(take decisions from robots and create moves); movement(move everybody same time or single robot, change coordinates or map???)
 '''
 
-class Group:
+class Group(list):  #добавление наследования? extend append
     robots = []
     
     #def __init__(self):
@@ -150,9 +162,13 @@ class Group:
         #find all robots 
         
     '''def get_info(self):
-        return robots'''
+        return robots
+        
+        сделать наследование от map и применять ко всем роботам функцию переводав сферические координаты
+        '''
+        
     
-    def get_neighbourhood(self, robot):
+    def get_neighbourhood(self, robot): 
         neibours = []
         for r in self.robots:
             nb = (r.coord[0] - robot.coord[0], r.coord[1] - robot.coord[1], r.direct)
@@ -163,16 +179,17 @@ class Group:
         targets = []
         for r in self.robots:
             targets.append(r.make_decision(r.soar_command_create(self.get_neighbourhood(r))))
+        return targets
         #HOW compare/check/make decision? changing targets or from targets make other array - 'moves'
         #change in future. in present soar_command first word -> moves
-        self.movement(moves)
+        #self.movement(moves)
         #return moves    
     
-    def movement(self, moves): #move everybody same time or single robot, change coordinates or map??? 
+    '''def movement(self, moves): #move everybody same time or single robot, change coordinates or map??? 
         for r in self.robots:
             neibours = self.get_neighbourhood(r)
             #check in future. in present ==. create move = (dx,dy)
-            r.robot_move(move)
+            r.robot_move(move)'''
             
         
 '''Запуск
@@ -193,8 +210,8 @@ if __name__ == "__main__":      #use or not to use?
             break
         data = line.split()
         gr.robots.append(Robot(n, int(data[0]), int(data[1]), int(data[2])))
-        
-    print(gr.process)
+        print("create r{}".format(n))
+    print(gr.process())
     
     '''for r in gr.robots:
         print(r.info_coord(), r.info_direct())

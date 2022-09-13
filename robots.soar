@@ -24,7 +24,7 @@ sp {init-robot
 sp {movement-candidate
     (state <s> ^io <io>)
     (<io> ^input-link <il>)
-    (<il> ^far_away <r>)
+    (<il> ^away <r>)
 -->
     (<s> ^operator <o> + =)
     (<o> ^name go-to
@@ -38,9 +38,8 @@ sp {wait
     (<io> ^output-link <ol>)
     (<ol> ^target {<st> <> stay1})
     (<s> ^name <start>)
-    -(<il> ^far_away <r>)
 -->
-    (<s> ^operator <o> !)
+    (<s> ^operator <o> <)
     (<o> ^name stay1)
 }
 
@@ -50,9 +49,8 @@ sp {wait2
     (<s> ^name <start>)
     (<io> ^output-link <ol>)
     (<ol> ^target stay1)
-    -(<il> ^far_away <r>)
 -->
-    (<s> ^operator <o> !)
+    (<s> ^operator <o> <)
     (<o> ^name stay2)
 }
 

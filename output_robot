@@ -1,9 +1,463 @@
-(1, 2) 20
-[(0, 0, 20), (-2, -2, 30), (19, 6, 180)]
-['itself', 'back-left nearby', 'front-right away']
-(-1, 0) 30
-[(2, 2, 20), (0, 0, 30), (21, 8, 180)]
-['front-right nearby', 'itself', 'front-right away']
-(20, 8) 180
-[(-19, -6, 20), (-21, -8, 30), (0, 0, 180)]
-['front-right away', 'front-right away', 'itself']
+--- Input Phase --- 
+
+--- END Input Phase ---
+
+--- Proposal Phase ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+
+Firing init-robot-propose
++ (O1 ^name init-system +) (init-robot-propose)
++ (S1 ^operator O1 +) (init-robot-propose)
+=>WM: (15: S1 ^operator O1 +)
+=>WM: (14: O1 ^name init-system)
+
+--- END Proposal Phase ---
+
+--- Decision Phase ---
+=>WM: (16: S1 ^operator O1)
+
+     1:    O: O1 (init-system)
+--- END Decision Phase ---
+
+create r1
+--- Input Phase --- 
+
+--- END Input Phase ---
+
+--- Proposal Phase ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+
+Firing init-robot-propose
++ (O1 ^name init-system +) (init-robot-propose)
++ (S1 ^operator O1 +) (init-robot-propose)
+=>WM: (15: S1 ^operator O1 +)
+=>WM: (14: O1 ^name init-system)
+
+--- END Proposal Phase ---
+
+--- Decision Phase ---
+=>WM: (16: S1 ^operator O1)
+
+     1:    O: O1 (init-system)
+--- END Decision Phase ---
+
+create r2
+--- Input Phase --- 
+
+--- END Input Phase ---
+
+--- Proposal Phase ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+
+Firing init-robot-propose
++ (O1 ^name init-system +) (init-robot-propose)
++ (S1 ^operator O1 +) (init-robot-propose)
+=>WM: (15: S1 ^operator O1 +)
+=>WM: (14: O1 ^name init-system)
+
+--- END Proposal Phase ---
+
+--- Decision Phase ---
+=>WM: (16: S1 ^operator O1)
+
+     1:    O: O1 (init-system)
+--- END Decision Phase ---
+
+create r3
+working with r1
+--- Application Phase ---
+	--- Firing Productions (PE) For State At Depth 1 ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+
+Firing init-robot
++ (S1 ^name start +  :O ) (init-robot)
++ (I3 ^target no +  :O ) (init-robot)
+	--- Change Working Memory (PE) ---
+=>WM: (18: S1 ^name start)
+=>WM: (17: I3 ^target no)
+	--- Firing Productions (IE) For State At Depth 1 ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+
+Firing wait
++ (O2 ^name stay1 +) (wait)
++ (S1 ^operator O2 <) (wait)
+
+Retracting init-robot-propose
+- (O1 ^name init-system +) (init-robot-propose)
+- (S1 ^operator O1 +) (init-robot-propose)
+	--- Change Working Memory (IE) ---
+
+        REMOVING: Operator from context slot (proposal no longer matches): (15: S1 ^operator O1 +)
+=>WM: (19: O2 ^name stay1)
+<=WM: (15: S1 ^operator O1 +)
+<=WM: (16: S1 ^operator O1)
+<=WM: (14: O1 ^name init-system)
+	--- Firing Productions (IE) For State At Depth 1 ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+	--- Change Working Memory (IE) ---
+
+--- END Application Phase ---
+
+--- Output Phase ---
+
+--- END Output Phase ---
+
+--- Input Phase --- 
+=>WM: (21: I2 ^away |r3|)
+=>WM: (20: I2 ^nearby |r2|)
+
+--- END Input Phase --- 
+
+--- Proposal Phase ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+
+Firing movement-candidate
++ (O3 ^target |r3| +) (movement-candidate)
++ (O3 ^name go-to +) (movement-candidate)
++ (S1 ^operator O3 =) (movement-candidate)
++ (S1 ^operator O3 +) (movement-candidate)
+=>WM: (24: S1 ^operator O3 +)
+=>WM: (23: O3 ^target |r3|)
+=>WM: (22: O3 ^name go-to)
+
+--- END Proposal Phase ---
+
+--- Decision Phase ---
+=>WM: (25: S1 ^operator O3)
+
+     2:    O: O3 (go-to)
+--- END Decision Phase ---
+
+--- Application Phase ---
+	--- Firing Productions (PE) For State At Depth 1 ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+
+Firing move
+- (I3 ^target no +  :O ) (init-robot)
++ (I3 ^target |r3| +  :O ) (move)
+	--- Change Working Memory (PE) ---
+=>WM: (26: I3 ^target |r3|)
+<=WM: (17: I3 ^target no)
+	--- Firing Productions (IE) For State At Depth 1 ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+
+Firing wait
++ (O4 ^name stay1 +) (wait)
++ (S1 ^operator O4 <) (wait)
+
+Retracting wait
+- (O2 ^name stay1 +) (wait)
+- (S1 ^operator O2 <) (wait)
+	--- Change Working Memory (IE) ---
+=>WM: (27: O4 ^name stay1)
+<=WM: (19: O2 ^name stay1)
+
+--- END Application Phase ---
+
+--- Output Phase ---
+
+--- END Output Phase ---
+
+--- Input Phase --- 
+
+--- END Input Phase ---
+
+--- Proposal Phase ---
+
+--- END Proposal Phase ---
+
+--- Decision Phase ---
+=>WM: (41: S2 ^quiescence t)
+=>WM: (40: S2 ^choices none)
+=>WM: (39: S2 ^impasse no-change)
+=>WM: (38: S2 ^attribute operator)
+=>WM: (37: L2 ^result R6)
+=>WM: (36: L2 ^command C4)
+=>WM: (35: S2 ^smem L2)
+=>WM: (34: E2 ^present-id 1)
+=>WM: (33: E2 ^result R5)
+=>WM: (32: E2 ^command C3)
+=>WM: (31: S2 ^epmem E2)
+=>WM: (30: S2 ^reward-link R4)
+=>WM: (29: S2 ^superstate S1)
+=>WM: (28: S2 ^type state)
+
+     3:    ==>S: S2 (operator no-change)
+--- END Decision Phase ---
+
+r3
+working with r2
+--- Application Phase ---
+	--- Firing Productions (PE) For State At Depth 1 ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+
+Firing init-robot
++ (S1 ^name start +  :O ) (init-robot)
++ (I3 ^target no +  :O ) (init-robot)
+	--- Change Working Memory (PE) ---
+=>WM: (18: S1 ^name start)
+=>WM: (17: I3 ^target no)
+	--- Firing Productions (IE) For State At Depth 1 ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+
+Firing wait
++ (O2 ^name stay1 +) (wait)
++ (S1 ^operator O2 <) (wait)
+
+Retracting init-robot-propose
+- (O1 ^name init-system +) (init-robot-propose)
+- (S1 ^operator O1 +) (init-robot-propose)
+	--- Change Working Memory (IE) ---
+
+        REMOVING: Operator from context slot (proposal no longer matches): (15: S1 ^operator O1 +)
+=>WM: (19: O2 ^name stay1)
+<=WM: (15: S1 ^operator O1 +)
+<=WM: (16: S1 ^operator O1)
+<=WM: (14: O1 ^name init-system)
+	--- Firing Productions (IE) For State At Depth 1 ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+	--- Change Working Memory (IE) ---
+
+--- END Application Phase ---
+
+--- Output Phase ---
+
+--- END Output Phase ---
+
+--- Input Phase --- 
+=>WM: (21: I2 ^away |r3|)
+=>WM: (20: I2 ^nearby |r1|)
+
+--- END Input Phase --- 
+
+--- Proposal Phase ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+
+Firing movement-candidate
++ (O3 ^target |r3| +) (movement-candidate)
++ (O3 ^name go-to +) (movement-candidate)
++ (S1 ^operator O3 =) (movement-candidate)
++ (S1 ^operator O3 +) (movement-candidate)
+=>WM: (24: S1 ^operator O3 +)
+=>WM: (23: O3 ^target |r3|)
+=>WM: (22: O3 ^name go-to)
+
+--- END Proposal Phase ---
+
+--- Decision Phase ---
+=>WM: (25: S1 ^operator O3)
+
+     2:    O: O3 (go-to)
+--- END Decision Phase ---
+
+--- Application Phase ---
+	--- Firing Productions (PE) For State At Depth 1 ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+
+Firing move
+- (I3 ^target no +  :O ) (init-robot)
++ (I3 ^target |r3| +  :O ) (move)
+	--- Change Working Memory (PE) ---
+=>WM: (26: I3 ^target |r3|)
+<=WM: (17: I3 ^target no)
+	--- Firing Productions (IE) For State At Depth 1 ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+
+Firing wait
++ (O4 ^name stay1 +) (wait)
++ (S1 ^operator O4 <) (wait)
+
+Retracting wait
+- (O2 ^name stay1 +) (wait)
+- (S1 ^operator O2 <) (wait)
+	--- Change Working Memory (IE) ---
+=>WM: (27: O4 ^name stay1)
+<=WM: (19: O2 ^name stay1)
+
+--- END Application Phase ---
+
+--- Output Phase ---
+
+--- END Output Phase ---
+
+--- Input Phase --- 
+
+--- END Input Phase ---
+
+--- Proposal Phase ---
+
+--- END Proposal Phase ---
+
+--- Decision Phase ---
+=>WM: (41: S2 ^quiescence t)
+=>WM: (40: S2 ^choices none)
+=>WM: (39: S2 ^impasse no-change)
+=>WM: (38: S2 ^attribute operator)
+=>WM: (37: L2 ^result R6)
+=>WM: (36: L2 ^command C4)
+=>WM: (35: S2 ^smem L2)
+=>WM: (34: E2 ^present-id 1)
+=>WM: (33: E2 ^result R5)
+=>WM: (32: E2 ^command C3)
+=>WM: (31: S2 ^epmem E2)
+=>WM: (30: S2 ^reward-link R4)
+=>WM: (29: S2 ^superstate S1)
+=>WM: (28: S2 ^type state)
+
+     3:    ==>S: S2 (operator no-change)
+--- END Decision Phase ---
+
+r3
+working with r3
+--- Application Phase ---
+	--- Firing Productions (PE) For State At Depth 1 ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+
+Firing init-robot
++ (S1 ^name start +  :O ) (init-robot)
++ (I3 ^target no +  :O ) (init-robot)
+	--- Change Working Memory (PE) ---
+=>WM: (18: S1 ^name start)
+=>WM: (17: I3 ^target no)
+	--- Firing Productions (IE) For State At Depth 1 ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+
+Firing wait
++ (O2 ^name stay1 +) (wait)
++ (S1 ^operator O2 <) (wait)
+
+Retracting init-robot-propose
+- (O1 ^name init-system +) (init-robot-propose)
+- (S1 ^operator O1 +) (init-robot-propose)
+	--- Change Working Memory (IE) ---
+
+        REMOVING: Operator from context slot (proposal no longer matches): (15: S1 ^operator O1 +)
+=>WM: (19: O2 ^name stay1)
+<=WM: (15: S1 ^operator O1 +)
+<=WM: (16: S1 ^operator O1)
+<=WM: (14: O1 ^name init-system)
+	--- Firing Productions (IE) For State At Depth 1 ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+	--- Change Working Memory (IE) ---
+
+--- END Application Phase ---
+
+--- Output Phase ---
+
+--- END Output Phase ---
+
+--- Input Phase --- 
+=>WM: (21: I2 ^away |r2|)
+=>WM: (20: I2 ^away |r1|)
+
+--- END Input Phase --- 
+
+--- Proposal Phase ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+
+Firing movement-candidate
+
+Firing movement-candidate
++ (O4 ^target |r2| +) (movement-candidate)
++ (O4 ^name go-to +) (movement-candidate)
++ (S1 ^operator O4 =) (movement-candidate)
++ (S1 ^operator O4 +) (movement-candidate)
++ (O3 ^target |r1| +) (movement-candidate)
++ (O3 ^name go-to +) (movement-candidate)
++ (S1 ^operator O3 =) (movement-candidate)
++ (S1 ^operator O3 +) (movement-candidate)
+=>WM: (27: S1 ^operator O4 +)
+=>WM: (26: S1 ^operator O3 +)
+=>WM: (25: O4 ^target |r2|)
+=>WM: (24: O4 ^name go-to)
+=>WM: (23: O3 ^target |r1|)
+=>WM: (22: O3 ^name go-to)
+
+--- END Proposal Phase ---
+
+--- Decision Phase ---
+=>WM: (28: S1 ^operator O3)
+
+     2:    O: O3 (go-to)
+--- END Decision Phase ---
+
+--- Application Phase ---
+	--- Firing Productions (PE) For State At Depth 1 ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+
+Firing move
+- (I3 ^target no +  :O ) (init-robot)
++ (I3 ^target |r1| +  :O ) (move)
+	--- Change Working Memory (PE) ---
+=>WM: (29: I3 ^target |r1|)
+<=WM: (17: I3 ^target no)
+	--- Firing Productions (IE) For State At Depth 1 ---
+
+--- Inner Elaboration Phase, active level 1 goal S1 ---
+
+Firing wait
++ (O5 ^name stay1 +) (wait)
++ (S1 ^operator O5 <) (wait)
+
+Retracting wait
+- (O2 ^name stay1 +) (wait)
+- (S1 ^operator O2 <) (wait)
+	--- Change Working Memory (IE) ---
+=>WM: (30: O5 ^name stay1)
+<=WM: (19: O2 ^name stay1)
+
+--- END Application Phase ---
+
+--- Output Phase ---
+
+--- END Output Phase ---
+
+--- Input Phase --- 
+
+--- END Input Phase ---
+
+--- Proposal Phase ---
+
+--- END Proposal Phase ---
+
+--- Decision Phase ---
+=>WM: (44: S2 ^quiescence t)
+=>WM: (43: S2 ^choices none)
+=>WM: (42: S2 ^impasse no-change)
+=>WM: (41: S2 ^attribute operator)
+=>WM: (40: L2 ^result R6)
+=>WM: (39: L2 ^command C4)
+=>WM: (38: S2 ^smem L2)
+=>WM: (37: E2 ^present-id 1)
+=>WM: (36: E2 ^result R5)
+=>WM: (35: E2 ^command C3)
+=>WM: (34: S2 ^epmem E2)
+=>WM: (33: S2 ^reward-link R4)
+=>WM: (32: S2 ^superstate S1)
+=>WM: (31: S2 ^type state)
+
+     3:    ==>S: S2 (operator no-change)
+--- END Decision Phase ---
+
+r1
+['r3', 'r3', 'r1']
