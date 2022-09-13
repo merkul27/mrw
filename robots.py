@@ -43,16 +43,9 @@ class Robot:
         big_dist = 10
         
         for nb in neibours:
-            #print(nb)
-            d = int(self.direct)
-            z = (nb[0] ** 2 + nb[1] ** 2) ** (0.5)
-            if z < 0:
-                print ("neibour distance error")
-                break
-            x = nb[0] * math.cos(math.radians(d)) - nb[1] * math.sin(math.radians(d))
-            y = nb[0] * math.sin(math.radians(d)) + nb[1] * math.cos(math.radians(d))
-            #coordinates where is neibour относит взгляда робота матрица перехода турупупум 
-
+            x = nb[0]
+            y = nb[1]
+            z = nb[2]
             if x > 0 and y > 0:     # ./
                 if z <= big_dist:
                     soar_sentences.append("front-right nearby")
@@ -97,11 +90,6 @@ class Robot:
                 soar_sentences.append("itself")
         return soar_sentences;
         
-    def info_coord(self):         
-        return self.coord
-    
-    def info_direct(self):        
-        return self.direct
     
     def make_decision(self, soar_sentences):
         
@@ -146,6 +134,9 @@ class Robot:
         #kernel.Shutdown()
         return target
         #move one robot one step
+        
+    def move(self,target): #target в виде ri вытаскиваем номер робота смотрим его положение в соседях и двигаемся в направлении (с поворотом или без?). пока по тупому просто на фиксированный шаг.
+        
   
     
 '''
@@ -171,8 +162,15 @@ class Group(list):  #добавление наследования? extend appen
     def get_neighbourhood(self, robot): 
         neibours = []
         for r in self.robots:
-            nb = (r.coord[0] - robot.coord[0], r.coord[1] - robot.coord[1], r.direct)
-            neibours.append(nb)
+            nb = (r.coord[0] - robot.coord[0], r.coord[1] - robot.coord[1])
+        #print(nb)
+            d = int(r.direct)
+            z = (nb[0] ** 2 + nb[1] ** 2) ** (0.5)
+            x = nb[0] * math.cos(math.radians(d)) - nb[1] * math.sin(math.radians(d))
+            y = nb[0] * math.sin(math.radians(d)) + nb[1] * math.cos(math.radians(d))
+            #coordinates where is neibour относит взгляда робота матрица перехода турупупум
+            neibour = (x, y, z)
+            neibours.append(neibour)
         return neibours
     
     def process(self): #take decisions from robots and take one desicions
@@ -185,11 +183,12 @@ class Group(list):  #добавление наследования? extend appen
         #self.movement(moves)
         #return moves    
     
-    '''def movement(self, moves): #move everybody same time or single robot, change coordinates or map??? 
+    def movement(self, targets): #move everybody same time or single robot, change coordinates or map??? 
         for r in self.robots:
-            neibours = self.get_neighbourhood(r)
+            #neibours = self.get_neighbourhood(r)
+            r.move(targets[r.num - 1])
             #check in future. in present ==. create move = (dx,dy)
-            r.robot_move(move)'''
+            
             
         
 '''Запуск
