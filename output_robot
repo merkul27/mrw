@@ -1,463 +1,158 @@
---- Input Phase --- 
-
---- END Input Phase ---
-
---- Proposal Phase ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-
-Firing init-robot-propose
-+ (O1 ^name init-system +) (init-robot-propose)
-+ (S1 ^operator O1 +) (init-robot-propose)
-=>WM: (15: S1 ^operator O1 +)
-=>WM: (14: O1 ^name init-system)
-
---- END Proposal Phase ---
-
---- Decision Phase ---
-=>WM: (16: S1 ^operator O1)
-
-     1:    O: O1 (init-system)
---- END Decision Phase ---
-
 create r1
---- Input Phase --- 
-
---- END Input Phase ---
-
---- Proposal Phase ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-
-Firing init-robot-propose
-+ (O1 ^name init-system +) (init-robot-propose)
-+ (S1 ^operator O1 +) (init-robot-propose)
-=>WM: (15: S1 ^operator O1 +)
-=>WM: (14: O1 ^name init-system)
-
---- END Proposal Phase ---
-
---- Decision Phase ---
-=>WM: (16: S1 ^operator O1)
-
-     1:    O: O1 (init-system)
---- END Decision Phase ---
-
 create r2
---- Input Phase --- 
-
---- END Input Phase ---
-
---- Proposal Phase ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-
-Firing init-robot-propose
-+ (O1 ^name init-system +) (init-robot-propose)
-+ (S1 ^operator O1 +) (init-robot-propose)
-=>WM: (15: S1 ^operator O1 +)
-=>WM: (14: O1 ^name init-system)
-
---- END Proposal Phase ---
-
---- Decision Phase ---
-=>WM: (16: S1 ^operator O1)
-
-     1:    O: O1 (init-system)
---- END Decision Phase ---
-
 create r3
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (-3.0, -2.0, 3.605551275463989)
+in get_neibourhood (18.0, 6.0, 18.973665961010276)
+['itself', 'back-left away', 'front-right away']
 working with r1
---- Application Phase ---
-	--- Firing Productions (PE) For State At Depth 1 ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-
-Firing init-robot
-+ (S1 ^name start +  :O ) (init-robot)
-+ (I3 ^target no +  :O ) (init-robot)
-	--- Change Working Memory (PE) ---
-=>WM: (18: S1 ^name start)
-=>WM: (17: I3 ^target no)
-	--- Firing Productions (IE) For State At Depth 1 ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-
-Firing wait
-+ (O2 ^name stay1 +) (wait)
-+ (S1 ^operator O2 <) (wait)
-
-Retracting init-robot-propose
-- (O1 ^name init-system +) (init-robot-propose)
-- (S1 ^operator O1 +) (init-robot-propose)
-	--- Change Working Memory (IE) ---
-
-        REMOVING: Operator from context slot (proposal no longer matches): (15: S1 ^operator O1 +)
-=>WM: (19: O2 ^name stay1)
-<=WM: (15: S1 ^operator O1 +)
-<=WM: (16: S1 ^operator O1)
-<=WM: (14: O1 ^name init-system)
-	--- Firing Productions (IE) For State At Depth 1 ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-	--- Change Working Memory (IE) ---
-
---- END Application Phase ---
-
---- Output Phase ---
-
---- END Output Phase ---
-
---- Input Phase --- 
-=>WM: (21: I2 ^away |r3|)
-=>WM: (20: I2 ^nearby |r2|)
-
---- END Input Phase --- 
-
---- Proposal Phase ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-
-Firing movement-candidate
-+ (O3 ^target |r3| +) (movement-candidate)
-+ (O3 ^name go-to +) (movement-candidate)
-+ (S1 ^operator O3 =) (movement-candidate)
-+ (S1 ^operator O3 +) (movement-candidate)
-=>WM: (24: S1 ^operator O3 +)
-=>WM: (23: O3 ^target |r3|)
-=>WM: (22: O3 ^name go-to)
-
---- END Proposal Phase ---
-
---- Decision Phase ---
-=>WM: (25: S1 ^operator O3)
-
-     2:    O: O3 (go-to)
---- END Decision Phase ---
-
---- Application Phase ---
-	--- Firing Productions (PE) For State At Depth 1 ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-
-Firing move
-- (I3 ^target no +  :O ) (init-robot)
-+ (I3 ^target |r3| +  :O ) (move)
-	--- Change Working Memory (PE) ---
-=>WM: (26: I3 ^target |r3|)
-<=WM: (17: I3 ^target no)
-	--- Firing Productions (IE) For State At Depth 1 ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-
-Firing wait
-+ (O4 ^name stay1 +) (wait)
-+ (S1 ^operator O4 <) (wait)
-
-Retracting wait
-- (O2 ^name stay1 +) (wait)
-- (S1 ^operator O2 <) (wait)
-	--- Change Working Memory (IE) ---
-=>WM: (27: O4 ^name stay1)
-<=WM: (19: O2 ^name stay1)
-
---- END Application Phase ---
-
---- Output Phase ---
-
---- END Output Phase ---
-
---- Input Phase --- 
-
---- END Input Phase ---
-
---- Proposal Phase ---
-
---- END Proposal Phase ---
-
---- Decision Phase ---
-=>WM: (41: S2 ^quiescence t)
-=>WM: (40: S2 ^choices none)
-=>WM: (39: S2 ^impasse no-change)
-=>WM: (38: S2 ^attribute operator)
-=>WM: (37: L2 ^result R6)
-=>WM: (36: L2 ^command C4)
-=>WM: (35: S2 ^smem L2)
-=>WM: (34: E2 ^present-id 1)
-=>WM: (33: E2 ^result R5)
-=>WM: (32: E2 ^command C3)
-=>WM: (31: S2 ^epmem E2)
-=>WM: (30: S2 ^reward-link R4)
-=>WM: (29: S2 ^superstate S1)
-=>WM: (28: S2 ^type state)
-
-     3:    ==>S: S2 (operator no-change)
---- END Decision Phase ---
-
 r3
+in get_neibourhood (3.0, 2.0, 3.605551275463989)
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (21.0, 8.0, 22.47220505424423)
+['front-right away', 'itself', 'front-right away']
 working with r2
---- Application Phase ---
-	--- Firing Productions (PE) For State At Depth 1 ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-
-Firing init-robot
-+ (S1 ^name start +  :O ) (init-robot)
-+ (I3 ^target no +  :O ) (init-robot)
-	--- Change Working Memory (PE) ---
-=>WM: (18: S1 ^name start)
-=>WM: (17: I3 ^target no)
-	--- Firing Productions (IE) For State At Depth 1 ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-
-Firing wait
-+ (O2 ^name stay1 +) (wait)
-+ (S1 ^operator O2 <) (wait)
-
-Retracting init-robot-propose
-- (O1 ^name init-system +) (init-robot-propose)
-- (S1 ^operator O1 +) (init-robot-propose)
-	--- Change Working Memory (IE) ---
-
-        REMOVING: Operator from context slot (proposal no longer matches): (15: S1 ^operator O1 +)
-=>WM: (19: O2 ^name stay1)
-<=WM: (15: S1 ^operator O1 +)
-<=WM: (16: S1 ^operator O1)
-<=WM: (14: O1 ^name init-system)
-	--- Firing Productions (IE) For State At Depth 1 ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-	--- Change Working Memory (IE) ---
-
---- END Application Phase ---
-
---- Output Phase ---
-
---- END Output Phase ---
-
---- Input Phase --- 
-=>WM: (21: I2 ^away |r3|)
-=>WM: (20: I2 ^nearby |r1|)
-
---- END Input Phase --- 
-
---- Proposal Phase ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-
-Firing movement-candidate
-+ (O3 ^target |r3| +) (movement-candidate)
-+ (O3 ^name go-to +) (movement-candidate)
-+ (S1 ^operator O3 =) (movement-candidate)
-+ (S1 ^operator O3 +) (movement-candidate)
-=>WM: (24: S1 ^operator O3 +)
-=>WM: (23: O3 ^target |r3|)
-=>WM: (22: O3 ^name go-to)
-
---- END Proposal Phase ---
-
---- Decision Phase ---
-=>WM: (25: S1 ^operator O3)
-
-     2:    O: O3 (go-to)
---- END Decision Phase ---
-
---- Application Phase ---
-	--- Firing Productions (PE) For State At Depth 1 ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-
-Firing move
-- (I3 ^target no +  :O ) (init-robot)
-+ (I3 ^target |r3| +  :O ) (move)
-	--- Change Working Memory (PE) ---
-=>WM: (26: I3 ^target |r3|)
-<=WM: (17: I3 ^target no)
-	--- Firing Productions (IE) For State At Depth 1 ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-
-Firing wait
-+ (O4 ^name stay1 +) (wait)
-+ (S1 ^operator O4 <) (wait)
-
-Retracting wait
-- (O2 ^name stay1 +) (wait)
-- (S1 ^operator O2 <) (wait)
-	--- Change Working Memory (IE) ---
-=>WM: (27: O4 ^name stay1)
-<=WM: (19: O2 ^name stay1)
-
---- END Application Phase ---
-
---- Output Phase ---
-
---- END Output Phase ---
-
---- Input Phase --- 
-
---- END Input Phase ---
-
---- Proposal Phase ---
-
---- END Proposal Phase ---
-
---- Decision Phase ---
-=>WM: (41: S2 ^quiescence t)
-=>WM: (40: S2 ^choices none)
-=>WM: (39: S2 ^impasse no-change)
-=>WM: (38: S2 ^attribute operator)
-=>WM: (37: L2 ^result R6)
-=>WM: (36: L2 ^command C4)
-=>WM: (35: S2 ^smem L2)
-=>WM: (34: E2 ^present-id 1)
-=>WM: (33: E2 ^result R5)
-=>WM: (32: E2 ^command C3)
-=>WM: (31: S2 ^epmem E2)
-=>WM: (30: S2 ^reward-link R4)
-=>WM: (29: S2 ^superstate S1)
-=>WM: (28: S2 ^type state)
-
-     3:    ==>S: S2 (operator no-change)
---- END Decision Phase ---
-
-r3
+r1
+in get_neibourhood (-18.0, -6.0, 18.973665961010276)
+in get_neibourhood (-21.0, -8.0, 22.47220505424423)
+in get_neibourhood (0.0, 0.0, 0.0)
+['back-left away', 'back-left away', 'itself']
 working with r3
---- Application Phase ---
-	--- Firing Productions (PE) For State At Depth 1 ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-
-Firing init-robot
-+ (S1 ^name start +  :O ) (init-robot)
-+ (I3 ^target no +  :O ) (init-robot)
-	--- Change Working Memory (PE) ---
-=>WM: (18: S1 ^name start)
-=>WM: (17: I3 ^target no)
-	--- Firing Productions (IE) For State At Depth 1 ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-
-Firing wait
-+ (O2 ^name stay1 +) (wait)
-+ (S1 ^operator O2 <) (wait)
-
-Retracting init-robot-propose
-- (O1 ^name init-system +) (init-robot-propose)
-- (S1 ^operator O1 +) (init-robot-propose)
-	--- Change Working Memory (IE) ---
-
-        REMOVING: Operator from context slot (proposal no longer matches): (15: S1 ^operator O1 +)
-=>WM: (19: O2 ^name stay1)
-<=WM: (15: S1 ^operator O1 +)
-<=WM: (16: S1 ^operator O1)
-<=WM: (14: O1 ^name init-system)
-	--- Firing Productions (IE) For State At Depth 1 ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-	--- Change Working Memory (IE) ---
-
---- END Application Phase ---
-
---- Output Phase ---
-
---- END Output Phase ---
-
---- Input Phase --- 
-=>WM: (21: I2 ^away |r2|)
-=>WM: (20: I2 ^away |r1|)
-
---- END Input Phase --- 
-
---- Proposal Phase ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-
-Firing movement-candidate
-
-Firing movement-candidate
-+ (O4 ^target |r2| +) (movement-candidate)
-+ (O4 ^name go-to +) (movement-candidate)
-+ (S1 ^operator O4 =) (movement-candidate)
-+ (S1 ^operator O4 +) (movement-candidate)
-+ (O3 ^target |r1| +) (movement-candidate)
-+ (O3 ^name go-to +) (movement-candidate)
-+ (S1 ^operator O3 =) (movement-candidate)
-+ (S1 ^operator O3 +) (movement-candidate)
-=>WM: (27: S1 ^operator O4 +)
-=>WM: (26: S1 ^operator O3 +)
-=>WM: (25: O4 ^target |r2|)
-=>WM: (24: O4 ^name go-to)
-=>WM: (23: O3 ^target |r1|)
-=>WM: (22: O3 ^name go-to)
-
---- END Proposal Phase ---
-
---- Decision Phase ---
-=>WM: (28: S1 ^operator O3)
-
-     2:    O: O3 (go-to)
---- END Decision Phase ---
-
---- Application Phase ---
-	--- Firing Productions (PE) For State At Depth 1 ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-
-Firing move
-- (I3 ^target no +  :O ) (init-robot)
-+ (I3 ^target |r1| +  :O ) (move)
-	--- Change Working Memory (PE) ---
-=>WM: (29: I3 ^target |r1|)
-<=WM: (17: I3 ^target no)
-	--- Firing Productions (IE) For State At Depth 1 ---
-
---- Inner Elaboration Phase, active level 1 goal S1 ---
-
-Firing wait
-+ (O5 ^name stay1 +) (wait)
-+ (S1 ^operator O5 <) (wait)
-
-Retracting wait
-- (O2 ^name stay1 +) (wait)
-- (S1 ^operator O2 <) (wait)
-	--- Change Working Memory (IE) ---
-=>WM: (30: O5 ^name stay1)
-<=WM: (19: O2 ^name stay1)
-
---- END Application Phase ---
-
---- Output Phase ---
-
---- END Output Phase ---
-
---- Input Phase --- 
-
---- END Input Phase ---
-
---- Proposal Phase ---
-
---- END Proposal Phase ---
-
---- Decision Phase ---
-=>WM: (44: S2 ^quiescence t)
-=>WM: (43: S2 ^choices none)
-=>WM: (42: S2 ^impasse no-change)
-=>WM: (41: S2 ^attribute operator)
-=>WM: (40: L2 ^result R6)
-=>WM: (39: L2 ^command C4)
-=>WM: (38: S2 ^smem L2)
-=>WM: (37: E2 ^present-id 1)
-=>WM: (36: E2 ^result R5)
-=>WM: (35: E2 ^command C3)
-=>WM: (34: S2 ^epmem E2)
-=>WM: (33: S2 ^reward-link R4)
-=>WM: (32: S2 ^superstate S1)
-=>WM: (31: S2 ^type state)
-
-     3:    ==>S: S2 (operator no-change)
---- END Decision Phase ---
-
+r1
+['r3', 'r1', 'r1']
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (-3.0, -2.0, 3.605551275463989)
+in get_neibourhood (18.0, 6.0, 18.973665961010276)
+in get_neibourhood (12.0, 5.0, 13.0)
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (21.0, 8.0, 22.47220505424423)
+in get_neibourhood (-9.0, -3.0, 9.486832980505138)
+in get_neibourhood (-15.0, -5.5, 15.976545308670458)
+in get_neibourhood (0.0, 0.0, 0.0)
+[11.0, 5.0]
+[5.0, 2.5]
+[15.5, 6.5]
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (-6.0, -2.5, 6.5)
+in get_neibourhood (4.5, 1.5, 4.743416490252569)
+['itself', 'back-left away', 'front-right away']
+working with r1
+r3
+in get_neibourhood (6.0, 2.5, 6.5)
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (10.5, 4.0, 11.236102527122116)
+['front-right away', 'itself', 'front-right away']
+working with r2
+r3
+in get_neibourhood (-4.5, -1.5, 4.743416490252569)
+in get_neibourhood (-10.5, -4.0, 11.236102527122116)
+in get_neibourhood (0.0, 0.0, 0.0)
+['back-left away', 'back-left away', 'itself']
+working with r3
 r1
 ['r3', 'r3', 'r1']
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (-6.0, -2.5, 6.5)
+in get_neibourhood (4.5, 1.5, 4.743416490252569)
+in get_neibourhood (8.25, 3.25, 8.8670739254841)
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (10.5, 4.0, 11.236102527122116)
+in get_neibourhood (-2.25, -0.75, 2.3717082451262845)
+in get_neibourhood (-5.25, -2.0, 5.618051263561058)
+in get_neibourhood (0.0, 0.0, 0.0)
+[13.25, 5.75]
+[10.25, 4.5]
+[14.375, 6.125]
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (-3.0, -1.25, 3.25)
+in get_neibourhood (1.125, 0.375, 1.1858541225631423)
+['itself', 'back-left away', 'front-right nearby']
+working with r1
+r2
+in get_neibourhood (3.0, 1.25, 3.25)
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (4.125, 1.625, 4.43353696274205)
+['front-right away', 'itself', 'front-right away']
+working with r2
+r1
+in get_neibourhood (-1.125, -0.375, 1.1858541225631423)
+in get_neibourhood (-4.125, -1.625, 4.43353696274205)
+in get_neibourhood (0.0, 0.0, 0.0)
+['back-left nearby', 'back-left away', 'itself']
+working with r3
+r2
+['r2', 'r1', 'r2']
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (-3.0, -1.25, 3.25)
+in get_neibourhood (1.125, 0.375, 1.1858541225631423)
+in get_neibourhood (1.5, 0.625, 1.625)
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (4.125, 1.625, 4.43353696274205)
+in get_neibourhood (-2.625, -1.0, 2.809025631780529)
+in get_neibourhood (-3.375, -1.3125, 3.6212264842177437)
+in get_neibourhood (0.0, 0.0, 0.0)
+[11.75, 5.125]
+[11.0, 4.8125]
+[12.6875, 5.46875]
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (-0.75, -0.3125, 0.8125)
+in get_neibourhood (0.9375, 0.34375, 0.9985340817919036)
+['itself', 'back-left nearby', 'front-right nearby']
+working with r1
+r2
+in get_neibourhood (0.75, 0.3125, 0.8125)
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (1.6875, 0.65625, 1.8106132421088719)
+['front-right nearby', 'itself', 'front-right nearby']
+working with r2
+r1
+in get_neibourhood (-0.9375, -0.34375, 0.9985340817919036)
+in get_neibourhood (-1.6875, -0.65625, 1.8106132421088719)
+in get_neibourhood (0.0, 0.0, 0.0)
+['back-left nearby', 'back-left nearby', 'itself']
+working with r3
+r2
+['r2', 'r1', 'r2']
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (-0.75, -0.3125, 0.8125)
+in get_neibourhood (0.9375, 0.34375, 0.9985340817919036)
+in get_neibourhood (0.375, 0.15625, 0.40625)
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (1.6875, 0.65625, 1.8106132421088719)
+in get_neibourhood (-1.3125, -0.5, 1.4045128158902644)
+in get_neibourhood (-1.5, -0.578125, 1.6075535809499477)
+in get_neibourhood (0.0, 0.0, 0.0)
+[11.375, 4.96875]
+[11.1875, 4.890625]
+[11.9375, 5.1796875]
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (-0.1875, -0.078125, 0.203125)
+in get_neibourhood (0.5625, 0.2109375, 0.6007502633426389)
+['itself', 'back-left nearby', 'front-right nearby']
+working with r1
+r2
+in get_neibourhood (0.1875, 0.078125, 0.203125)
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (0.75, 0.2890625, 0.8037767904749739)
+['front-right nearby', 'itself', 'front-right nearby']
+working with r2
+r1
+in get_neibourhood (-0.5625, -0.2109375, 0.6007502633426389)
+in get_neibourhood (-0.75, -0.2890625, 0.8037767904749739)
+in get_neibourhood (0.0, 0.0, 0.0)
+['back-left nearby', 'back-left nearby', 'itself']
+working with r3
+r2
+['r2', 'r1', 'r2']
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (-0.1875, -0.078125, 0.203125)
+in get_neibourhood (0.5625, 0.2109375, 0.6007502633426389)
+in get_neibourhood (0.09375, 0.0390625, 0.1015625)
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (0.75, 0.2890625, 0.8037767904749739)
+in get_neibourhood (-0.65625, -0.25, 0.7022564079451322)
+in get_neibourhood (-0.703125, -0.26953125, 0.7530151793633131)
+in get_neibourhood (0.0, 0.0, 0.0)
+[11.28125, 4.9296875]
+[11.234375, 4.91015625]
+[11.5859375, 5.044921875]

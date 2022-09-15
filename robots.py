@@ -5,7 +5,6 @@ import sys
 sys.path.append('/opt/Soar/out')
 import Python_sml_ClientInterface as sml
 
-
 # function to print Soar output
 def cb_print_soar_message(mid, user_data, agent, message):
     print(message.strip() + '\n')
@@ -15,14 +14,14 @@ __class Robot__
 Methods: __init__; soar_command_create(take neibours(Group) and single robot, make soar_sentences); info_coord; info_direct; make_decision(take soar_sentences work with soar and return soar target); robot_move(take decision(Group.movement) and move robot)
 '''
 
-
 class Robot:
     #rob_count = 0
     #neibours = []
     
     def __init__(self, n, x, y, direct):
         self.num = n
-        self.coord = (x, y) 
+        coord = (x, y)
+        self.coord = list(coord)
         self.direct = direct # в градусах! [0,360) полярные координаты??? [x,y] --> [r,fi] x=r*cos(fi), y=r*sin(fi) 
         #Robot.rob_count += 1;
         # create processing kernel and agent
@@ -30,9 +29,9 @@ class Robot:
         self.agent = self.kernel.CreateAgent("agent")
         
         # add method to print debug messages from Soar
-        self.agent.RegisterForPrintEvent(sml.smlEVENT_PRINT,
+        '''self.agent.RegisterForPrintEvent(sml.smlEVENT_PRINT,
                             cb_print_soar_message,
-                            None)
+                            None)'''
         self.agent.ExecuteCommandLine("watch 5")
         self.agent.ExecuteCommandLine("source robots.soar")
         self.agent.RunSelf(1)
@@ -40,7 +39,7 @@ class Robot:
     def soar_command_create(self, neibours):
         # neibours := list with distances to other robots 0x, 0y (including itself)
         soar_sentences = []
-        big_dist = 10
+        big_dist = 3
         
         for nb in neibours:
             x = nb[0]
@@ -88,11 +87,11 @@ class Robot:
                     soar_sentences.append("left away")
             elif x == 0 and y == 0: # .
                 soar_sentences.append("itself")
+        print(soar_sentences)
         return soar_sentences;
         
     
     def make_decision(self, soar_sentences):
-        
         print("working with r{}".format(self.num))
         input_link = self.agent.GetInputLink()
         #LOOP with soar_command_create
@@ -135,7 +134,10 @@ class Robot:
         return target
         #move one robot one step
         
-    def move(self,target): #target в виде ri вытаскиваем номер робота смотрим его положение в соседях и двигаемся в направлении (с поворотом или без?). пока по тупому просто на фиксированный шаг.
+    def move(self,target): #target в виде (x, y)
+        #print("in move {}".format(target))
+        self.coord[0] += target[0]/2
+        self.coord[1] += target[1]/2
         
   
     
@@ -154,22 +156,20 @@ class Group(list):  #добавление наследования? extend appen
         
     '''def get_info(self):
         return robots
-        
         сделать наследование от map и применять ко всем роботам функцию переводав сферические координаты
         '''
-        
-    
     def get_neighbourhood(self, robot): 
         neibours = []
         for r in self.robots:
             nb = (r.coord[0] - robot.coord[0], r.coord[1] - robot.coord[1])
-        #print(nb)
+            #print("in get_nei {}".format(nb))
             d = int(r.direct)
             z = (nb[0] ** 2 + nb[1] ** 2) ** (0.5)
             x = nb[0] * math.cos(math.radians(d)) - nb[1] * math.sin(math.radians(d))
             y = nb[0] * math.sin(math.radians(d)) + nb[1] * math.cos(math.radians(d))
             #coordinates where is neibour относит взгляда робота матрица перехода турупупум
             neibour = (x, y, z)
+            print("in get_neibourhood {}".format(neibour))
             neibours.append(neibour)
         return neibours
     
@@ -178,17 +178,30 @@ class Group(list):  #добавление наследования? extend appen
         for r in self.robots:
             targets.append(r.make_decision(r.soar_command_create(self.get_neighbourhood(r))))
         return targets
+        
         #HOW compare/check/make decision? changing targets or from targets make other array - 'moves'
         #change in future. in present soar_command first word -> moves
         #self.movement(moves)
         #return moves    
     
-    def movement(self, targets): #move everybody same time or single robot, change coordinates or map??? 
+    def movement(self, targets): #move everybody same time or single robot 
+        s = 0
         for r in self.robots:
+            if (s == 3):
+                return 1
             #neibours = self.get_neighbourhood(r)
-            r.move(targets[r.num - 1])
+            if (len(targets[r.num-1]) > 2):
+                s += 1
+                continue
+            new_target = targets[r.num-1]
+            #print("in movement {}".format(new_target))
+            k = int(new_target[1])
+            #print("in movement {}".format(k))
+            neiborhood = self.get_neighbourhood(r)
+            t = (neiborhood[k-1][0],neiborhood[k-1][1])
+            r.move(t)
             #check in future. in present ==. create move = (dx,dy)
-            
+        return 0    
             
         
 '''Запуск
@@ -210,10 +223,17 @@ if __name__ == "__main__":      #use or not to use?
         data = line.split()
         gr.robots.append(Robot(n, int(data[0]), int(data[1]), int(data[2])))
         print("create r{}".format(n))
-    print(gr.process())
-    
-    '''for r in gr.robots:
-        print(r.info_coord(), r.info_direct())
+        k = 0
+    while (k < 5):
+        k += 1
+        res = gr.process()
+        print(res)
+        if (gr.movement(res) == 1):
+            break
+        #print robots' coord after movement
+        for r in gr.robots:
+            print(r.coord)
+        '''
     #for r in gr.robots:
         neighbourhood = gr.get_neighbourhood(r)
         print(neighbourhood)
