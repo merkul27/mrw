@@ -29,9 +29,12 @@ class Robot:
         self.agent = self.kernel.CreateAgent("agent")
         
         # add method to print debug messages from Soar
-        '''self.agent.RegisterForPrintEvent(sml.smlEVENT_PRINT,
-                            cb_print_soar_message,
-                            None)'''
+        """
+        if self.num == 1:
+            self.agent.RegisterForPrintEvent(sml.smlEVENT_PRINT,
+                                cb_print_soar_message,
+                                None)
+        """
         self.agent.ExecuteCommandLine("watch 5")
         self.agent.ExecuteCommandLine("source robots.soar")
         self.agent.RunSelf(1)
@@ -112,9 +115,10 @@ class Robot:
                                                word, 
                                                'r' + str(i))
             robot_links.append(r_link)
-        self.agent.RunSelf(2)
+        self.agent.RunSelf(1)
         for r in robot_links:
             self.agent.DestroyWME(r)
+        self.agent.RunSelf(1)
         target = "None"
         output_link = self.agent.GetOutputLink()
         
@@ -185,6 +189,7 @@ class Group(list):  #добавление наследования? extend appen
         #return moves    
     
     def movement(self, targets): #move everybody same time or single robot 
+        print('Targets: ', targets)
         s = 0
         for r in self.robots:
             if (s == 3):
@@ -195,11 +200,12 @@ class Group(list):  #добавление наследования? extend appen
                 continue
             new_target = targets[r.num-1]
             #print("in movement {}".format(new_target))
-            k = int(new_target[1])
-            #print("in movement {}".format(k))
-            neiborhood = self.get_neighbourhood(r)
-            t = (neiborhood[k-1][0],neiborhood[k-1][1])
-            r.move(t)
+            if new_target != 'no':
+                k = int(new_target[1])
+                #print("in movement {}".format(k))
+                neiborhood = self.get_neighbourhood(r)
+                t = (neiborhood[k-1][0],neiborhood[k-1][1])
+                r.move(t)
             #check in future. in present ==. create move = (dx,dy)
         return 0    
             

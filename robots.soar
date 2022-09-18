@@ -35,22 +35,24 @@ sp {movement-candidate
 sp {wait
     (state <s> ^io <io>)
     (<io> ^input-link <il>)
+    (<il> -^away)
     (<io> ^output-link <ol>)
     (<ol> ^target {<st> <> stay1})
     (<s> ^name <start>)
 -->
-    (<s> ^operator <o> <)
+    (<s> ^operator <o> < +)
     (<o> ^name stay1)
 }
 
 sp {wait2
     (state <s> ^io <io>)
     (<io> ^input-link <il>)
+    (<il> -^away)
     (<s> ^name <start>)
     (<io> ^output-link <ol>)
     (<ol> ^target stay1)
 -->
-    (<s> ^operator <o> <)
+    (<s> ^operator <o> < +)
     (<o> ^name stay2)
 }
 
