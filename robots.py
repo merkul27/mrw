@@ -23,7 +23,7 @@ class Robot:
         coord = (x, y)
         self.coord = list(coord)
         self.direct = direct # в градусах! [0,360) полярные координаты??? [x,y] --> [r,fi] x=r*cos(fi), y=r*sin(fi) 
-        #Robot.rob_count += 1;
+        
         # create processing kernel and agent
         self.kernel = sml.Kernel.CreateKernelInCurrentThread()
         self.agent = self.kernel.CreateAgent("agent")
@@ -138,8 +138,14 @@ class Robot:
         return target
         #move one robot one step
         
-    def move(self,target): #target в виде (x, y)
-        #print("in move {}".format(target))
+    def move(self,target): #target в виде (x, y, z)
+        print("in move {}".format(target))
+        deltad = math.degrees(math.atan2(y,x))
+        if deltad < 0:
+            deltad = 360 + deltad
+        else:
+            deltad = deltad - 90
+        self.direct = 
         self.coord[0] += target[0]/2
         self.coord[1] += target[1]/2
         
@@ -165,14 +171,15 @@ class Group(list):  #добавление наследования? extend appen
     def get_neighbourhood(self, robot): 
         neibours = []
         for r in self.robots:
-            nb = (r.coord[0] - robot.coord[0], r.coord[1] - robot.coord[1])
+            nb = (r.coord[0] - robot.coord[0], r.coord[1] - robot.coord[1]) #(x,y) -> (x~,y~)
             #print("in get_nei {}".format(nb))
             d = int(r.direct)
-            z = (nb[0] ** 2 + nb[1] ** 2) ** (0.5)
+            z = (nb[0] ** 2 + nb[1] ** 2) ** (0.5) #(x~,y~) -> z
             x = nb[0] * math.cos(math.radians(d)) - nb[1] * math.sin(math.radians(d))
-            y = nb[0] * math.sin(math.radians(d)) + nb[1] * math.cos(math.radians(d))
+            y = nb[0] * math.sin(math.radians(d)) + nb[1] * math.cos(math.radians(d)) 
+            #(x~,y~,d) -> (x',y')
             #coordinates where is neibour относит взгляда робота матрица перехода турупупум
-            neibour = (x, y, z)
+            neibour = (x, y, z) #(x',y',z)
             print("in get_neibourhood {}".format(neibour))
             neibours.append(neibour)
         return neibours
@@ -183,29 +190,27 @@ class Group(list):  #добавление наследования? extend appen
             targets.append(r.make_decision(r.soar_command_create(self.get_neighbourhood(r))))
         return targets
         
-        #HOW compare/check/make decision? changing targets or from targets make other array - 'moves'
-        #change in future. in present soar_command first word -> moves
-        #self.movement(moves)
-        #return moves    
+        
     
-    def movement(self, targets): #move everybody same time or single robot 
+    def movement(self, targets):  
         print('Targets: ', targets)
         s = 0
         for r in self.robots:
-            if (s == 3):
-                return 1
+            print("count of stays: {}".format(s))
             #neibours = self.get_neighbourhood(r)
             if (len(targets[r.num-1]) > 2):
                 s += 1
                 continue
             new_target = targets[r.num-1]
             #print("in movement {}".format(new_target))
-            if new_target != 'no':
+            if new_target != 'None':
                 k = int(new_target[1])
                 #print("in movement {}".format(k))
                 neiborhood = self.get_neighbourhood(r)
-                t = (neiborhood[k-1][0],neiborhood[k-1][1])
+                t = neiborhood[k-1]
                 r.move(t)
+        if (s == 3):
+                return 1
             #check in future. in present ==. create move = (dx,dy)
         return 0    
             
@@ -230,11 +235,12 @@ if __name__ == "__main__":      #use or not to use?
         gr.robots.append(Robot(n, int(data[0]), int(data[1]), int(data[2])))
         print("create r{}".format(n))
         k = 0
-    while (k < 5):
-        k += 1
+    while True:
+        #k += 1
         res = gr.process()
         print(res)
         if (gr.movement(res) == 1):
+            print("ALL STAY")
             break
         #print robots' coord after movement
         for r in gr.robots:

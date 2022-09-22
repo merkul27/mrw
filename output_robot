@@ -12,131 +12,92 @@ in get_neibourhood (0.0, 0.0, 0.0)
 in get_neibourhood (21.0, 8.0, 22.47220505424423)
 ['front-right away', 'itself', 'front-right away']
 working with r2
-r1
+r3
 in get_neibourhood (-18.0, -6.0, 18.973665961010276)
 in get_neibourhood (-21.0, -8.0, 22.47220505424423)
 in get_neibourhood (0.0, 0.0, 0.0)
 ['back-left away', 'back-left away', 'itself']
 working with r3
 r1
-['r3', 'r1', 'r1']
-Targets:  ['r3', 'r1', 'r1']
+['r3', 'r3', 'r1']
+Targets:  ['r3', 'r3', 'r1']
+count of stays: 0
 in get_neibourhood (0.0, 0.0, 0.0)
 in get_neibourhood (-3.0, -2.0, 3.605551275463989)
 in get_neibourhood (18.0, 6.0, 18.973665961010276)
+in move (18.0, 6.0, 18.973665961010276)
+count of stays: 0
 in get_neibourhood (12.0, 5.0, 13.0)
 in get_neibourhood (0.0, 0.0, 0.0)
 in get_neibourhood (21.0, 8.0, 22.47220505424423)
+in move (21.0, 8.0, 22.47220505424423)
+count of stays: 0
 in get_neibourhood (-9.0, -3.0, 9.486832980505138)
-in get_neibourhood (-15.0, -5.5, 15.976545308670458)
+in get_neibourhood (-10.5, -4.0, 11.236102527122116)
 in get_neibourhood (0.0, 0.0, 0.0)
+in move (-9.0, -3.0, 9.486832980505138)
 [11.0, 5.0]
-[5.0, 2.5]
+[9.5, 4.0]
 [15.5, 6.5]
 in get_neibourhood (0.0, 0.0, 0.0)
-in get_neibourhood (-6.0, -2.5, 6.5)
+in get_neibourhood (-1.5, -1.0, 1.8027756377319946)
 in get_neibourhood (4.5, 1.5, 4.743416490252569)
-['itself', 'back-left away', 'front-right away']
+['itself', 'back-left nearby', 'front-right away']
 working with r1
-r2
-in get_neibourhood (6.0, 2.5, 6.5)
+r3
+in get_neibourhood (1.5, 1.0, 1.8027756377319946)
 in get_neibourhood (0.0, 0.0, 0.0)
-in get_neibourhood (10.5, 4.0, 11.236102527122116)
-['front-right away', 'itself', 'front-right away']
+in get_neibourhood (6.0, 2.5, 6.5)
+['front-right nearby', 'itself', 'front-right away']
 working with r2
 r3
 in get_neibourhood (-4.5, -1.5, 4.743416490252569)
-in get_neibourhood (-10.5, -4.0, 11.236102527122116)
+in get_neibourhood (-6.0, -2.5, 6.5)
 in get_neibourhood (0.0, 0.0, 0.0)
 ['back-left away', 'back-left away', 'itself']
 working with r3
-r1
-['r2', 'r3', 'r1']
-Targets:  ['r2', 'r3', 'r1']
+r2
+['r3', 'r3', 'r2']
+Targets:  ['r3', 'r3', 'r2']
+count of stays: 0
 in get_neibourhood (0.0, 0.0, 0.0)
-in get_neibourhood (-6.0, -2.5, 6.5)
+in get_neibourhood (-1.5, -1.0, 1.8027756377319946)
 in get_neibourhood (4.5, 1.5, 4.743416490252569)
-in get_neibourhood (3.0, 1.25, 3.25)
+in move (4.5, 1.5, 4.743416490252569)
+count of stays: 0
+in get_neibourhood (3.75, 1.75, 4.138236339311712)
 in get_neibourhood (0.0, 0.0, 0.0)
-in get_neibourhood (10.5, 4.0, 11.236102527122116)
-in get_neibourhood (-7.5, -2.75, 7.988272654335229)
-in get_neibourhood (-5.25, -2.0, 5.618051263561058)
-in get_neibourhood (0.0, 0.0, 0.0)
-[8.0, 3.75]
-[10.25, 4.5]
-[11.75, 5.125]
-in get_neibourhood (0.0, 0.0, 0.0)
-in get_neibourhood (2.25, 0.75, 2.3717082451262845)
-in get_neibourhood (3.75, 1.375, 3.9941363271676145)
-['itself', 'front-right nearby', 'front-right away']
-working with r1
-r3
+in get_neibourhood (6.0, 2.5, 6.5)
+in move (6.0, 2.5, 6.5)
+count of stays: 0
 in get_neibourhood (-2.25, -0.75, 2.3717082451262845)
+in get_neibourhood (-3.0, -1.25, 3.25)
+in get_neibourhood (0.0, 0.0, 0.0)
+in move (-3.0, -1.25, 3.25)
+[13.25, 5.75]
+[12.5, 5.25]
+[14.0, 5.875]
+in get_neibourhood (0.0, 0.0, 0.0)
+in get_neibourhood (-0.75, -0.5, 0.9013878188659973)
+in get_neibourhood (0.75, 0.125, 0.7603453162872774)
+['itself', 'back-left nearby', 'front-right nearby']
+working with r1
+stay2
+in get_neibourhood (0.75, 0.5, 0.9013878188659973)
 in get_neibourhood (0.0, 0.0, 0.0)
 in get_neibourhood (1.5, 0.625, 1.625)
-['back-left nearby', 'itself', 'front-right nearby']
+['front-right nearby', 'itself', 'front-right nearby']
 working with r2
 stay2
-in get_neibourhood (-3.75, -1.375, 3.9941363271676145)
+in get_neibourhood (-0.75, -0.125, 0.7603453162872774)
 in get_neibourhood (-1.5, -0.625, 1.625)
-in get_neibourhood (0.0, 0.0, 0.0)
-['back-left away', 'back-left nearby', 'itself']
-working with r3
-r1
-['r3', 'stay2', 'r1']
-Targets:  ['r3', 'stay2', 'r1']
-in get_neibourhood (0.0, 0.0, 0.0)
-in get_neibourhood (2.25, 0.75, 2.3717082451262845)
-in get_neibourhood (3.75, 1.375, 3.9941363271676145)
-in get_neibourhood (-1.875, -0.6875, 1.9970681635838072)
-in get_neibourhood (-1.5, -0.625, 1.625)
-in get_neibourhood (0.0, 0.0, 0.0)
-[9.875, 4.4375]
-[10.25, 4.5]
-[10.8125, 4.78125]
-in get_neibourhood (0.0, 0.0, 0.0)
-in get_neibourhood (0.375, 0.0625, 0.3801726581436387)
-in get_neibourhood (0.9375, 0.34375, 0.9985340817919036)
-['itself', 'front-right nearby', 'front-right nearby']
-working with r1
-stay2
-in get_neibourhood (-0.375, -0.0625, 0.3801726581436387)
-in get_neibourhood (0.0, 0.0, 0.0)
-in get_neibourhood (0.5625, 0.28125, 0.6288941186718159)
-['back-left nearby', 'itself', 'front-right nearby']
-working with r2
-stay2
-in get_neibourhood (-0.9375, -0.34375, 0.9985340817919036)
-in get_neibourhood (-0.5625, -0.28125, 0.6288941186718159)
 in get_neibourhood (0.0, 0.0, 0.0)
 ['back-left nearby', 'back-left nearby', 'itself']
 working with r3
 stay2
 ['stay2', 'stay2', 'stay2']
 Targets:  ['stay2', 'stay2', 'stay2']
-[9.875, 4.4375]
-[10.25, 4.5]
-[10.8125, 4.78125]
-in get_neibourhood (0.0, 0.0, 0.0)
-in get_neibourhood (0.375, 0.0625, 0.3801726581436387)
-in get_neibourhood (0.9375, 0.34375, 0.9985340817919036)
-['itself', 'front-right nearby', 'front-right nearby']
-working with r1
-stay2
-in get_neibourhood (-0.375, -0.0625, 0.3801726581436387)
-in get_neibourhood (0.0, 0.0, 0.0)
-in get_neibourhood (0.5625, 0.28125, 0.6288941186718159)
-['back-left nearby', 'itself', 'front-right nearby']
-working with r2
-stay2
-in get_neibourhood (-0.9375, -0.34375, 0.9985340817919036)
-in get_neibourhood (-0.5625, -0.28125, 0.6288941186718159)
-in get_neibourhood (0.0, 0.0, 0.0)
-['back-left nearby', 'back-left nearby', 'itself']
-working with r3
-stay2
-['stay2', 'stay2', 'stay2']
-Targets:  ['stay2', 'stay2', 'stay2']
-[9.875, 4.4375]
-[10.25, 4.5]
-[10.8125, 4.78125]
+count of stays: 0
+count of stays: 1
+count of stays: 2
+ALL STAY
