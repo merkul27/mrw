@@ -22,7 +22,7 @@ class Robot:
         self.num = n
         coord = (x, y)
         self.coord = list(coord)
-        self.direct = direct # в градусах! [0,360) полярные координаты??? [x,y] --> [r,fi] x=r*cos(fi), y=r*sin(fi) 
+        self.direct = direct # в градусах! [-180,180] полярные координаты??? [x,y] --> [r,fi] x=r*cos(fi), y=r*sin(fi) 
         
         # create processing kernel and agent
         self.kernel = sml.Kernel.CreateKernelInCurrentThread()
@@ -43,11 +43,14 @@ class Robot:
         # neibours := list with distances to other robots 0x, 0y (including itself)
         soar_sentences = []
         big_dist = 3
-        
+        d = int(self.direct)
+            
         for nb in neibours:
-            x = nb[0]
-            y = nb[1]
-            z = nb[2]
+            z = (nb[0] ** 2 + nb[1] ** 2) ** (0.5)
+            x = nb[0] * math.cos(math.radians(d)) - nb[1] * math.sin(math.radians(d))
+            y = nb[0] * math.sin(math.radians(d)) + nb[1] * math.cos(math.radians(d)) 
+            #coordinates where is neibour относит взгляда робота матрица перехода турупупум
+            
             if x > 0 and y > 0:     # ./
                 if z <= big_dist:
                     soar_sentences.append("front-right nearby")
@@ -138,14 +141,11 @@ class Robot:
         return target
         #move one robot one step
         
-    def move(self,target): #target в виде (x, y, z)
+    def move(self,target): #target в виде (x, y)
         print("in move {}".format(target))
-        deltad = math.degrees(math.atan2(y,x))
-        if deltad < 0:
-            deltad = 360 + deltad
-        else:
-            deltad = deltad - 90
-        self.direct = 
+        print("origin direct {}".format(self.direct))
+        self.direct = math.degrees(math.atan2(target[1],target[0]))
+        print("new direct {}".format(self.direct))
         self.coord[0] += target[0]/2
         self.coord[1] += target[1]/2
         
@@ -173,14 +173,9 @@ class Group(list):  #добавление наследования? extend appen
         for r in self.robots:
             nb = (r.coord[0] - robot.coord[0], r.coord[1] - robot.coord[1]) #(x,y) -> (x~,y~)
             #print("in get_nei {}".format(nb))
-            d = int(r.direct)
-            z = (nb[0] ** 2 + nb[1] ** 2) ** (0.5) #(x~,y~) -> z
-            x = nb[0] * math.cos(math.radians(d)) - nb[1] * math.sin(math.radians(d))
-            y = nb[0] * math.sin(math.radians(d)) + nb[1] * math.cos(math.radians(d)) 
-            #(x~,y~,d) -> (x',y')
-            #coordinates where is neibour относит взгляда робота матрица перехода турупупум
-            neibour = (x, y, z) #(x',y',z)
-            print("in get_neibourhood {}".format(neibour))
+            
+            neibour = (nb[0], nb[1]) #(x~,y~,z)
+            #print("in get_neibourhood {}".format(neibour))
             neibours.append(neibour)
         return neibours
     
@@ -210,7 +205,9 @@ class Group(list):  #добавление наследования? extend appen
                 t = neiborhood[k-1]
                 r.move(t)
         if (s == 3):
-                return 1
+            for r in self.robots:
+                print("coordinates {}".format(r.coord))
+            return 1
             #check in future. in present ==. create move = (dx,dy)
         return 0    
             
