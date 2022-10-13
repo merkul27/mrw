@@ -47,8 +47,8 @@ TrajectoryPlannerROS:
   holonomic_robot: false
   
   meter_scoring: true
-  yaw_goal_tolerance: 0.5
-  xy_goal_tolerance: 3.0
+  yaw_goal_tolerance: 0.1
+  xy_goal_tolerance: 0.1
   latch_xy_goal_tolerance: true
   
   sim_time: 5
@@ -69,8 +69,8 @@ DWAPlannerROS:
   max_vel_theta: 1.
   min_vel_theta: 0.2  # 0.1
 
-  yaw_goal_tolerance: 0.3
-  xy_goal_tolerance: 0.3
+  yaw_goal_tolerance: 0.1
+  xy_goal_tolerance: 0.1
   latch_xy_goal_tolerance: false
 
   sim_time: 1.7
@@ -120,13 +120,13 @@ TebLocalPlannerROS:
    footprint_model: # types: "point", "circular", "two_circles", "line", "polygon"
      #type: "polygon"
      type: circular
-     radius: 0.9 # for type "circular"
+     radius: 0.2 # for type "circular"
      #vertices: [[0.55, 0.56], [-0.55, 0.56], [-0.55, -0.56], [0.55, -0.56]]
 
    # GoalTolerance
       
-   xy_goal_tolerance: 0.3
-   yaw_goal_tolerance: 0.3
+   xy_goal_tolerance: 0.05
+   yaw_goal_tolerance: 0.05
    free_goal_vel: False
       
    # Obstacles

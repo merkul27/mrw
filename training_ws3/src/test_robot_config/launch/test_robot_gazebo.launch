@@ -32,7 +32,7 @@
     
   
     <node pkg="tf" type="static_transform_publisher" name="static_pose_broadcaster"
-    args="0 0 0 0 0 1 1 map odom 100" />
+    args="0 0 0 0 0 0 1 map odom 100" />
 
   <!-- Run the map server -->
    <node name="map_server" pkg="map_server" type="map_server"
@@ -57,7 +57,7 @@
     <remap from="cmd_vel" to="mobile_base_controller/cmd_vel"/>
 
     <param name="base_local_planner" type="str" value="teb_local_planner/TebLocalPlannerROS" />
-    <param name="base_global_planner" type="str" value="custom_global_planner/CustomGlobalPlanner" />
+    <param name="base_global_planner" type="str" value="global_planner/GlobalPlanner" />
     <!--param name="base_local_planner" type="str" value="base_local_planner/TrajectoryPlannerROS" /-->
     <!--param name="base_local_planner" type="str" value="dwa_local_planner/DWAPlannerROS" /-->
   </node>
@@ -66,5 +66,7 @@
     ns="/">
     <remap from="odom" to="gazebo_ground_truth_odom" />
   </node>
+  
+  <node name="move_node" pkg="test_robot_control" type="move_node.py" output="screen" />
   
 </launch>

@@ -54,10 +54,39 @@
   </link>
   
   <joint name="rwheel_j" type="continuous">
-    <origin xyz="0.1 0.12 0" rpy="0 0 0"/>
+    <origin xyz="0.1 -0.12 0" rpy="0 0 0"/>
     <parent link="body_link"/>
     <axis xyz="0 1 0"/>
     <child link="rwheel_link"/>
+  </joint>
+  
+  <link name="lwheel_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.01" radius="0.05"/>
+      </geometry>
+      <origin rpy="1.57 0 0" xyz="0 0 0"/>
+      <material name="black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.01" radius="0.5"/>
+      </geometry>
+      <origin rpy="1.57 0 0" xyz="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia izz="1e-5" ixy="0.0" ixz="0.0" ixx="1e-5" iyz="0.0" iyy="1e-5"/>
+    </inertial>
+  </link>
+  
+  <joint name="lwheel_j" type="continuous">
+    <origin xyz="0.1 0.12 0" rpy="0 0 0"/>
+    <parent link="body_link"/>
+    <axis xyz="0 1 0"/>
+    <child link="lwheel_link"/>
   </joint>
 
   <link name="caster_link">
