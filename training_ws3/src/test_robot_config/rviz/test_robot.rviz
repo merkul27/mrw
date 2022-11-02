@@ -6,6 +6,8 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
+        - /RobotModel1
+        - /RobotModel2
       Splitter Ratio: 0.5
     Tree Height: 674
   - Class: rviz/Selection
@@ -86,8 +88,8 @@ Visualization Manager:
           Show Trail: false
           Value: true
       Name: RobotModel
-      Robot Description: robot_description
-      TF Prefix: ""
+      Robot Description: robot1/robot_description
+      TF Prefix: robot1
       Update Interval: 0
       Value: true
       Visual Enabled: true
@@ -96,19 +98,31 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        base_link:
-          Value: true
-        body_link:
-          Value: true
-        caster_link:
-          Value: true
-        lwheel_link:
-          Value: true
         map:
           Value: true
-        odom:
+        robot1/base_link:
           Value: true
-        rwheel_link:
+        robot1/body_link:
+          Value: true
+        robot1/caster_link:
+          Value: true
+        robot1/lwheel_link:
+          Value: true
+        robot1/odom:
+          Value: true
+        robot1/rwheel_link:
+          Value: true
+        robot2/base_link:
+          Value: true
+        robot2/body_link:
+          Value: true
+        robot2/caster_link:
+          Value: true
+        robot2/lwheel_link:
+          Value: true
+        robot2/odom:
+          Value: true
+        robot2/rwheel_link:
           Value: true
       Marker Alpha: 1
       Marker Scale: 1
@@ -118,14 +132,23 @@ Visualization Manager:
       Show Names: true
       Tree:
         map:
-          odom:
-            base_link:
-              body_link:
-                caster_link:
+          robot1/odom:
+            robot1/base_link:
+              robot1/body_link:
+                robot1/caster_link:
                   {}
-                lwheel_link:
+                robot1/lwheel_link:
                   {}
-                rwheel_link:
+                robot1/rwheel_link:
+                  {}
+          robot2/odom:
+            robot2/base_link:
+              robot2/body_link:
+                robot2/caster_link:
+                  {}
+                robot2/lwheel_link:
+                  {}
+                robot2/rwheel_link:
                   {}
       Update Interval: 0
       Value: true
@@ -187,6 +210,46 @@ Visualization Manager:
       Topic: /move_base/TebLocalPlannerROS/local_plan
       Unreliable: false
       Value: true
+    - Alpha: 1
+      Class: rviz/RobotModel
+      Collision Enabled: false
+      Enabled: true
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+        base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        body_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        caster_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lwheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        rwheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+      Name: RobotModel
+      Robot Description: robot2/robot_description
+      TF Prefix: robot2
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -215,7 +278,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 4.148531913757324
+      Distance: 3.7960498332977295
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -223,17 +286,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 0.14735475182533264
-        Y: 0.24518080055713654
-        Z: 0.03763766586780548
+        X: 0.46115073561668396
+        Y: 0.16156592965126038
+        Z: 0.08040609210729599
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.8097966909408569
+      Pitch: 0.8597968220710754
       Target Frame: <Fixed Frame>
-      Yaw: 4.643576145172119
+      Yaw: 4.973577499389648
     Saved: ~
 Window Geometry:
   Displays:
