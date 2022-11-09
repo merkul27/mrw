@@ -35,7 +35,7 @@
     args="$(find test_robot_config)/config/map.yaml"/>
   
   
-    <node pkg="move_base" type="move_base" name="move_base"
+  <node pkg="move_base" type="move_base" name="move_base"
     output="screen">
     <rosparam file="$(find test_robot_config)/config/navigation/costmap_common_params.yaml" command="load" ns="global_costmap" subst_value="true"/>
     <rosparam file="$(find test_robot_config)/config/navigation/costmap_common_params.yaml" command="load" ns="local_costmap" subst_value="true"/>
@@ -45,7 +45,7 @@
 
     <param name="controller_frequency" type="double" value="10." />
     
-    <remap from="odom" to="odom_ros"/>
+    <!--remap from="odom" to="odom_ros"/-->
     <remap from="map" to="/map"/>
 
     <remap from="cmd_vel" to="mobile_base_controller/cmd_vel"/>

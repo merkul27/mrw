@@ -13,7 +13,7 @@ robot_y = None
 robot_ori = None
 
 def cb_robot_pos(msg):
-    global robot_x
+    global robot_x   
     global robot_y
     global robot_ori
     # get index

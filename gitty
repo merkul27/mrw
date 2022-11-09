@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+git add . 
+git commit -m "project_soar_gazebo with navigation problem"
+git push origin work

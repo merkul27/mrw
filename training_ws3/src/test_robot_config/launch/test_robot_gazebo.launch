@@ -22,12 +22,21 @@
   
   <include file="$(find test_robot_config)/launch/single_robot.launch">
     <arg name="robot" value="robot2" />
-    <arg name="x" value="1"/>
-    <arg name="y" value="1"/>
+    <arg name="x" value="5"/>
+    <arg name="y" value="5"/>
+    <arg name="z" value="0.1"/>
+    </include>
+    
+  <include file="$(find test_robot_config)/launch/single_robot.launch">
+    <arg name="robot" value="robot3" />
+    <arg name="x" value="-5"/>
+    <arg name="y" value="-5"/>
     <arg name="z" value="0.1"/>
     </include>
   
-  
-  <node name="move_node" pkg="test_robot_control" type="move_node.py" output="screen" />
+    <!--new-->
+    <!--<node name="project_soar_gazebo" pkg="test_robot_control" type="project_soar_gazebo.py" output="screen" >
+        <param name="soar_config_file" value="$(find test_robot_control)/scripts/robots.soar" />
+    </node>-->
   
 </launch>
