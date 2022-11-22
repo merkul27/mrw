@@ -96,7 +96,8 @@ DWAPlannerROS:
   prune_plan: true
 
 TebLocalPlannerROS:
-   odom_topic: /$(arg robot)/odom # DIFF in move_base_params /$(arg robot)/motion/mobile_base_controller/odom ???
+   odom_topic: /$(arg robot)/odom # DIFF in move_base_params /$(arg robot)/motion/mobile_base_controller/odom ??? 
+   #original /$(arg robot)/odom
    map_frame: map
       
    # Trajectory

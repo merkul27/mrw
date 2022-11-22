@@ -13,6 +13,10 @@
     
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find test_robot_config)/rviz/test_robot.rviz" required="true" />
    
+  <!-- Run the map server -->
+   <node name="map_server" pkg="map_server" type="map_server"
+    args="$(find test_robot_config)/config/map.yaml"/>
+  
   <include file="$(find test_robot_config)/launch/single_robot.launch">
     <arg name="robot" value="robot1" />
     <arg name="x" value="0"/>
@@ -35,8 +39,8 @@
     </include>
   
     <!--new-->
-    <!--<node name="project_soar_gazebo" pkg="test_robot_control" type="project_soar_gazebo.py" output="screen" >
+    <node name="project_soar_gazebo" pkg="test_robot_control" type="project_soar_gazebo.py" output="screen" >
         <param name="soar_config_file" value="$(find test_robot_control)/scripts/robots.soar" />
-    </node>-->
+    </node>
   
 </launch>

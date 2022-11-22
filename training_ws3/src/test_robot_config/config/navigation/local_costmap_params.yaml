@@ -6,6 +6,7 @@ local_costmap:
 
   global_frame: map
   robot_base_frame: $(arg robot)/base_link # DIFF base_link
+  #original $(arg robot)/base_link
 
   update_frequency: 5.0
   publish_frequency: 2.0
