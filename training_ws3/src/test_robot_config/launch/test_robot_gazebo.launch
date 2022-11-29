@@ -31,12 +31,12 @@
     <arg name="z" value="0.1"/>
     </include>
     
-  <include file="$(find test_robot_config)/launch/single_robot.launch">
+  <!-- <include file="$(find test_robot_config)/launch/single_robot.launch">
     <arg name="robot" value="robot3" />
     <arg name="x" value="-5"/>
     <arg name="y" value="-5"/>
     <arg name="z" value="0.1"/>
-    </include>
+    </include> -->
   
     <!--new-->
     <node name="project_soar_gazebo" pkg="test_robot_control" type="project_soar_gazebo.py" output="screen" >
