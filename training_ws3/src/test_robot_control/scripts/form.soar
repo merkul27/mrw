@@ -1,0 +1,26 @@
+# inicialization with target
+
+sp {init-robot-propose
+    (state <s> ^superstate nil
+              -^name)
+-->
+    (<s> ^operator <o> +)
+    (<o> ^name init-system)
+}
+
+sp {init-robot
+    (state <s> ^operator <o>)
+    (<o> ^name init-system)
+    (<s> ^io <io>)
+    (<io> ^output-link <ol>)
+-->
+    (<ol> ^target no)
+    (<ol> ^target <d> +)
+    (<d> ^valence)
+    (<s> ^name start)
+}
+
+# decision
+
+sp {
+}

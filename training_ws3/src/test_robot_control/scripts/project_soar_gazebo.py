@@ -48,7 +48,7 @@ class Robot:
     def soar_command_create(self, neibours):
         # neibours := list with distances to other robots 0x, 0y (including itself)
         soar_sentences = []
-        big_dist = 3
+        big_dist = 1
         d = int(self.direct)
             
         for nb in neibours:
@@ -208,11 +208,19 @@ class Group():
     
     def process(self): #take decisions from robots and give one desicions
         targets = []
-        
+        print("THINKING PROCESS")
         for r in self.robots:
             if r.direct is None:
                 continue
-            targets.append(r.make_decision(r.soar_command_create(self.get_neighbourhood(r))))
+            print("for robot number: {}".format(r.num))
+            #targets.append(r.make_decision(r.soar_command_create(self.get_neighbourhood(r))))
+            neibours = self.get_neighbourhood(r)
+            print("neighbourhood is: {}".format(neibours))
+            soar_commands = r.soar_command_create(neibours)
+            print("its soar sentences look like: {}".format(soar_commands))
+            target = r.make_decision(soar_commands)
+            print("and soar target is: {}".format(target))
+            targets.append(target)
         return targets
     
     def movement(self, targets):  
@@ -271,7 +279,7 @@ if __name__ == '__main__':
     
     while True:
         #k += 1
-        #rospy.sleep(1.)
+        rospy.sleep(1.)
         res = gr.process()
         print (res)
         if (gr.movement(res) == 1):

@@ -31,7 +31,7 @@
     <arg name="z" value="0.1"/>
     </include>
     
-  <!-- <include file="$(find test_robot_config)/launch/single_robot.launch">
+ <!-- <include file="$(find test_robot_config)/launch/single_robot.launch">
     <arg name="robot" value="robot3" />
     <arg name="x" value="-5"/>
     <arg name="y" value="-5"/>

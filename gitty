@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 git add . 
-git commit -m "project_soar_gazebo kucha"
+git commit -m "freezing with two robots"
 git push mrw work
