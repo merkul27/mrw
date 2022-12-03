@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 git add . 
-git commit -m "freezing with two robots"
+git commit -m "nothing matters"
 git push mrw work

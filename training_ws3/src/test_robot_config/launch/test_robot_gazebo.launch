@@ -41,6 +41,7 @@
     <!--new-->
     <node name="project_soar_gazebo" pkg="test_robot_control" type="project_soar_gazebo.py" output="screen" >
         <param name="soar_config_file" value="$(find test_robot_control)/scripts/robots.soar" />
+        <param name="robot_num" value="2"/>
     </node>
   
 </launch>

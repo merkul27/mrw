@@ -32,8 +32,7 @@ class Robot:
         self.agent.ExecuteCommandLine("source " + soar_config_file)
 
         # add method to print debug messages from Soar
-        if self.num == 1:
-            self.agent.RegisterForPrintEvent(sml.smlEVENT_PRINT,
+        self.agent.RegisterForPrintEvent(sml.smlEVENT_PRINT,
                                 cb_print_soar_message,
                                 None)
         self.agent.RunSelf(1)
@@ -48,7 +47,7 @@ class Robot:
     def soar_command_create(self, neibours):
         # neibours := list with distances to other robots 0x, 0y (including itself)
         soar_sentences = []
-        big_dist = 1
+        big_dist = 3
         d = int(self.direct)
             
         for nb in neibours:
@@ -117,11 +116,12 @@ class Robot:
             if len(w) < 2:
                 print('wrong status "{}"'.format(s))
                 continue
-            word = w[1]
+            dist = w[1]
+            dirc = w[0]
             i += 1
             r_link = self.agent.CreateStringWME(input_link,
-                                               word, 
-                                               'r' + str(i))
+                                               dist, 
+                                               'robot' + str(i))
             robot_links.append(r_link)
         self.agent.RunSelf(1)
         for r in robot_links:
@@ -172,7 +172,6 @@ class Robot:
         
         
     # function to get robot's coordinates and orientation
-    # where?
     def cb_robot_pos(self, msg):
         # where was 'test_robot' in example with move_node.py??? is it 'robotn' now?? 
         # get index
@@ -229,18 +228,18 @@ class Group():
         for r in self.robots:
             print("count of stays: {}".format(s))
             #neibours = self.get_neighbourhood(r)
-            if (len(targets[r.num-1]) > 2):
+            if (len(targets[r.num-1]) == 5):
                 s += 1
                 continue
             new_target = targets[r.num-1]
             #print("in movement {}".format(new_target))
             if new_target != 'None':
-                k = int(new_target[1])
+                k = int(new_target[5])
                 #print("in movement {}".format(k))
                 neiborhood = self.get_neighbourhood(r)
                 t = neiborhood[k-1]
                 r.move(t)
-        if (s == 3):
+        if (s == len(self.robots)):
             for r in self.robots:
                 print("coordinates {}".format(r.coord))
             return 1
@@ -260,21 +259,24 @@ def cb_print_soar_message(mid, user_data, agent, message):
 
 
 if __name__ == '__main__':
+    
     # connect to roscore
     rospy.init_node('soar_gazebo')
 
     n = 0
     gr = Group()
+    
     # take robot's data from gazebo and send in Group 
-    for n in range(3):
+    for n in range(rospy.get_param('~robot_num', 3)):
         n += 1
         #without data TODO 
-        gr.robots.append(Robot(n, None, None, None))
-        print("create robot{}".format(n))
+        r = Robot(n, None, None, None)
+        gr.robots.append(r)
+        print("create {}".format(r.name))
     
     while gr.wait():
         print("WAIT")
-        rospy.sleep(3.)
+        rospy.sleep(1.)
     
     
     while True:
