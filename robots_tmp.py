@@ -15,9 +15,9 @@ class Robot:
         self.num = n
         coord = (x, y)
         self.coord = list(coord)
-        self.direct = direct #??? look gazebo TODO
+        self.direct = direct #??? look gazebo TODO относительно одной СО
         self.name = "robot" + str(n)
-        #self.valence = (r, b, l) #for rectangular lattice formation
+        self.valence = (r, b, l) #for rectangular lattice formation
         # create processing kernel and agent
         self.kernel = sml.Kernel.CreateKernelInCurrentThread()
         self.agent = self.kernel.CreateAgent("agent")
@@ -90,7 +90,6 @@ class Robot:
         return soar_sentences;
         
     
-
     
     def make_decision(self, soar_sentences):
         print("working with r{}".format(self.num))
@@ -113,6 +112,17 @@ class Robot:
             r_link = self.agent.CreateStringWME(input_link,
                                                w[1], 
                                                'r' + str(i))
+            
+            robot_link = self.agent.CreateIdWME(input_link,
+                                               'near')
+            place1_link = = self.agent.CreateStringWME(robot_link,
+                                               'place', 
+                                               'left')
+            place2_link = = self.agent.CreateStringWME(robot_link,
+                                               'place', 
+                                               'right')
+            #создание дерева
+            
             #TODO valence_link
             robot_links.append(r_link)
         self.agent.RunSelf(1)
