@@ -10,14 +10,20 @@ import Python_sml_ClientInterface as sml
 def cb_print_soar_message(mid, user_data, agent, message):
     print(message.strip() + '\n')
 
+'''
+класс Робот 
+номер от счетчика ввода, координаты и направление из файла ввода, валентности начальные значения None
+'''
 class Robot:
     def __init__(self, n, x, y, direct):
         self.num = n
+        self.status = 0 #флаг - стоит в решетке или нет
         coord = (x, y)
         self.coord = list(coord)
-        self.direct = direct #??? look gazebo TODO относительно одной СО
+        self.direct = direct #??? look gazebo относительно одной СО
         self.name = "robot" + str(n)
-        self.valence = (r, b, l) #for rectangular lattice formation
+        #for rectangular lattice formation
+        self.valence = [None] * 3 
         # create processing kernel and agent
         self.kernel = sml.Kernel.CreateKernelInCurrentThread()
         self.agent = self.kernel.CreateAgent("agent")
@@ -29,7 +35,7 @@ class Robot:
                                 None)
         
         self.agent.ExecuteCommandLine("watch 5")
-        self.agent.ExecuteCommandLine("source robots2.soar")
+        self.agent.ExecuteCommandLine("source lattice.soar")
         self.agent.RunSelf(1)
         
     def soar_command_create(self, neibours):
@@ -88,8 +94,9 @@ class Robot:
                 soar_sentences.append("itself")
         print(soar_sentences)
         return soar_sentences;
-        
+
     
+        
     
     def make_decision(self, soar_sentences):
         print("working with r{}".format(self.num))
@@ -121,7 +128,7 @@ class Robot:
             place2_link = = self.agent.CreateStringWME(robot_link,
                                                'place', 
                                                'right')
-            #создание дерева
+            #создание дерева пример
             
             #TODO valence_link
             robot_links.append(r_link)
@@ -147,7 +154,19 @@ class Robot:
         #kernel.Shutdown()
         return target
         #move one robot one step
-        
+  
+    def make_decision_alter(self, soar_sentences):
+        #soar_sentences уже только с лидерами
+        print("working with robot{}".format(self.num))
+        input_link = self.agent.GetInputLink()
+        robot_links = []
+        i = 0
+        for s in soar_sentences:
+            if s == 'itself' or s == 'not valid':
+                i += 1
+                continue
+            w = s.split
+    
     def move(self,target): #target в виде (x, y)
         print("in move {}".format(target))
         print("origin direct {}".format(self.direct))
@@ -156,25 +175,32 @@ class Robot:
         self.coord[0] += target[0]/2
         self.coord[1] += target[1]/2
         
-  
-    
+
 '''
 __class Group__
 Methods: get_neighbourhood(create neibours with coordinates in relation to one robot and direct); process(take decisions from robots and create moves); movement(move everybody same time or single robot, change coordinates or map???)
+list_valence (вакантные места транслируются для всех роботов)
 '''
 
-class Group(list):  #добавление наследования? extend append
+class Group(list):  #добавление валентностей
     robots = []
+    places = []
     
     #def __init__(self):
         #robots = []
-    #def neibors(self, robot):
-        #find all robots 
+    #k=1 -- left, k=2 -- right, k=3 -- back
+    def get_valences(self, robot):
+        for r in self.robots:
+            k = 0
+            for v in r.valence:
+                k += 1
+                if v == 'place':
+                    places.append([r.num, k])
+    
+    #получать положение только роботов с местами ПОТОМ
+    #def get_lider_soar_command(self, robot):
         
-    '''def get_info(self):
-        return robots
-        сделать наследование от map и применять ко всем роботам функцию переводав сферические координаты
-        '''
+    
     def get_neighbourhood(self, robot): 
         neibours = []
         for r in self.robots:
@@ -182,9 +208,15 @@ class Group(list):  #добавление наследования? extend appen
             #print("in get_nei {}".format(nb))
             
             neibour = (nb[0], nb[1]) #(x~,y~,z)
-            #print("in get_neibourhood {}".format(neibour))
+            
             neibours.append(neibour)
         return neibours
+    
+    #не было данных о не лидерах или данные о лидерах отличаличь здесь или в spec_soar_command_create
+    def get_neighbourhood_alter(self, robot):
+    
+    #не было данных о не лидерах или данные о лидерах отличаличь здесь или в get_neighbourhood_alter
+    def spec_soar_command_create(self, neibours):
     
     def process(self): #take decisions from robots and take one desicions
         targets = []
@@ -220,39 +252,34 @@ class Group(list):  #добавление наследования? extend appen
             
         
 '''Запуск
-Вбиваются данные роботов: забиваются в группу и в карту!!!
-Запускаем с картой группу, которая по циклу опрашивает роботов и получает 
-# решения от каждого это один цикл
-# Цикл заканчивается при достижении условий
+Вбиваются данные роботов: из файла input_robot формат: 2 2 90 - координаты и абсолютное направление в градусах
+Запускаем группу, которая по циклу опрашивает роботов и получает решения от каждого это один цикл
+Цикл заканчивается при достижении условий 
 '''
-if __name__ == "__main__":      #use or not to use?
+if __name__ == "__main__":
     n = 0
     gr = Group()
     
     while True: 
         n += 1
-        #line = input("enter robot's coordinates and direction or Enter to finish: ")
         line = input()
         if not line:
+            print("None input")
             break
         data = line.split()
-        gr.robots.append(Robot(n, int(data[0]), int(data[1]), int(data[2])))
-        print("create r{}".format(n))
-        #k = 0
+        r = Robot(n, int(data[0]), int(data[1]), int(data[2]))
+        gr.robots.append(r)
+        if r.num == 1:
+            r.valence = ['place'] * 3
+            r.status = 1
+        print("create {}".format(r.name))
+    
     while True:
-        #k += 1
         res = gr.process()
         print(res)
         if (gr.movement(res) == 1):
             print("ALL STAY")
             break
-        #print robots' coord after movement
         for r in gr.robots:
             print(r.coord)
-        '''
-    #for r in gr.robots:
-        neighbourhood = gr.get_neighbourhood(r)
-        print(neighbourhood)
-        print(r.soar_command_create(neighbourhood))
-        while True:
-        group.take_desicion()'''
+

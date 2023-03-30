@@ -22,3 +22,44 @@ augmentation - дополнение
 В основном действия продукции это - создание предпочтений или создание/удаление ЭРПов.
 
 Память предпочтений. Предпочтения ссылаются на операторы, так выбирается текущий оператор. Единственное значение может быть выбрано текущим оператором. У предпочтений нет транзитивности. Когда два и более значения равнопредпочтительны Соар выбирает рандомно, это можно изменить decide indifferent-selection функцией. 
+
+Блоки в коде Соар делятся на два типа: с оператором в условии и без. Те что без могут автоматически отзывать действия, когда условия перестают выполняться. i-supported and o-supported? Те что с оператором выполняются только одно за раз, если их несколько.
+
+Цикл выполнения в соар (цикл принятия решения):
+1. Вход. Получение новых данных с сенсоров в рабочую память (входные функции)
+2. Предложение. Продукции выполняются(откатываются), выдвигают в кандидаты операторы и сравнивают их. i-supported. Так до установления равновесия (ни одна продукция не дает совпадение).
+3. Решение. Выбран новый оператор или создано новое состояние, если тупик. 
+4. Приложение.(Выполнение.) Выполняются продукции с оператором в условии? o-supported. После этого блоки без операторов обрабатываются до момента равновесия.
+5. Выход. Выходные команды отправляются во внешний мир. (выходные функции)
+
+Soar
+    while (HALT not true) Cycle;
+
+Cycle
+    InputPhase;
+    ProposalPhase;
+    DecisionPhase;
+    ApplicationPhase;
+    OutputPhase;
+
+ProposalPhase
+    while (some i-supported productions are waiting to fire or retract)
+        FireNewlyMatchedProductions;
+        RetractNewlyUnmatchedProductions;
+
+DecisionPhase
+    for (each state in the stack, starting with the top-level state)
+    until (a new decision is reached)
+        EvaluateOperatorPreferences; /* for the state being considered */
+        if (one operator preferred after preference evaluation)
+            SelectNewOperator;
+        else /* could be no operator available or */
+            CreateNewSubstate; /* unable to decide between more than one */
+ApplicationPhase
+    while (some productions are waiting to fire or retract)
+        FireNewlyMatchedProductions;
+        RetractNewlyUnmatchedProductions;
+
+Тупики возникают, когда не получается выбрать один оператор, те есть противоречия и прочее. Для решения тупиков создаются подсостояния.
+
+СИНТАКСИС

@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 git add . 
-git commit -m "lattice algorithm"
+git commit -m "lattice algorithm process"
 git push origin simple

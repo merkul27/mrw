@@ -1,34 +1,49 @@
-
 #инициализация с target=no
 sp {init-robot-propose
-    (state <s> ^superstate nil  #проверка, что это первое состояние (нет состояния родителя)
-              -^name)           #нет имени
+    (state <s> ^superstate nil  
+              -^name)           
 -->
-    (<s> ^operator <o> +)       #добавление оператора
-    (<o> ^name init-system)     #с именем инициализации
+    (<s> ^operator <o> +)       
+    (<o> ^name init-system)     
 }
 
 
 sp {init-robot
-    (state <s> ^operator <o>)   #проверка, что есть оператор
-    (<o> ^name init-system)     #с именем инициализации
-    (<s> ^io <io>)              #у состояния есть сист вход/выход (всегда есть)
-    (<io> ^output-link <ol>)    #и выход с названием <ol>
+    (state <s> ^operator <o>)   
+    (<o> ^name init-system)     
+    (<s> ^io <io>)              
+    (<io> ^output-link <ol>)    
 -->
-    (<ol> ^target no)           #добавление в <ol> что цели нет
-    (<s> ^name start)           #и изменение имени состояния на start (начало работы)
+    (<ol> ^target no)           
+    (<s> ^name start)           
 }
 
 #добавление кандидатов на цели
 sp {movement-candidate
-    (state <s> ^io <io>)        #проверка, что есть сист вход/выход (всегда есть)
-    (<io> ^input-link <il>)     #и вход с названием <il>
-                                #добавить <соседи>?
-    (<il> ^away? ^nearby <r>)            #и на входе есть <r>, который далеко или близко
-    (<r> ^direction? <dir>)     
+    (state <s> ^io <io>)        
+    (<io> ^input-link <il>)     
+                                
+    (<il> ^nearby <r>)            
+    (<r> ^direction <dir>)     
     (<r> ^valence <place>)      
 -->
-    (<s> ^operator <o> + =)     #добавление оператора (все они равноправны)
-    (<o> ^name go-to            #с именем идти-туда
-         ^target <r>)           #и целью = <r>
+    (<s> ^operator <o> + =)     
+    (<o> ^name go-to            
+         ^target <r>
+         ^place <place>)           
+}
+
+#определение цели
+sp {move 
+    (state <s>  ^operator <o>
+                ^io <io>)
+    (<o> ^name go-to
+         ^target <target>
+         ^place <place>)
+    (<ol> ^target {<old-target> <> <target>}) #и с place тоже самое 
+-->
+    (<ol> ^target <target>)
+    (<ol> ^target <old-target> -)
+    (<ol> ^place <place>)
+    (<ol> ^place <old-place> -)
 }

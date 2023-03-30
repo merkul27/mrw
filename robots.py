@@ -29,7 +29,7 @@ class Robot:
                                 None)
         
         self.agent.ExecuteCommandLine("watch 5")
-        self.agent.ExecuteCommandLine("source robots2.soar")
+        self.agent.ExecuteCommandLine("source kucha.soar")
         self.agent.RunSelf(1)
         
     def soar_command_create(self, neibours):
@@ -93,7 +93,7 @@ class Robot:
 
     
     def make_decision(self, soar_sentences):
-        print("working with r{}".format(self.num))
+        print("working with robot{}".format(self.num))
         input_link = self.agent.GetInputLink()
         #LOOP with soar_command_create
         i = 0
