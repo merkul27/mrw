@@ -12,12 +12,12 @@ def cb_print_soar_message(mid, user_data, agent, message):
 
 '''
 класс Робот 
-номер от счетчика ввода, координаты и направление из файла ввода, валентности начальные значения None
+номер от счетчика ввода, координаты и направление из файла ввода, валентности начальные значения None, статус лидера включается после расположения в решетке
 '''
 class Robot:
     def __init__(self, n, x, y, direct):
         self.num = n
-        self.status = 0 #флаг - стоит в решетке или нет
+        self.status = 0 #флаг-- 0-- не стоит ищет место, 1-- стоит есть место рядом, 2-- стоит мест рядом нет 
         coord = (x, y)
         self.coord = list(coord)
         self.direct = direct #??? look gazebo относительно одной СО
@@ -99,7 +99,7 @@ class Robot:
         
     
     def make_decision(self, soar_sentences):
-        print("working with r{}".format(self.num))
+        print("working with {}".format(self.name))
         input_link = self.agent.GetInputLink()
         #LOOP with soar_command_create
         i = 0
@@ -184,7 +184,7 @@ list_valence (вакантные места транслируются для в
 
 class Group(list):  #добавление валентностей
     robots = []
-    places = []
+    free_places = []
     
     #def __init__(self):
         #robots = []
