@@ -1,4 +1,4 @@
-#инициализация с target=no
+#начало
 sp {init-robot-propose
     (state <s> ^superstate nil  
               -^name)           
@@ -7,30 +7,114 @@ sp {init-robot-propose
     (<o> ^name init-system)     
 }
 
-
+#инициализация с target=no
 sp {init-robot
     (state <s> ^operator <o>)   
     (<o> ^name init-system)     
     (<s> ^io <io>)              
     (<io> ^output-link <ol>)    
 -->
-    (<ol> ^target no)           
+    (<ol> ^target no) 
+    (<ol> ^place no)
     (<s> ^name start)           
 }
 
 #добавление кандидатов на цели
+#далекие
 sp {movement-candidate
     (state <s> ^io <io>)        
     (<io> ^input-link <il>)     
-                                
-    (<il> ^nearby <r>)            
-    (<r> ^direction <dir>)     
-    (<r> ^valence <place>)      
+    (<il> ^away <r>) 
+    -(<il> ^)
+    (<r> ^valence <place>
+         ^direction <dir>
+         ^name <name>)      
 -->
     (<s> ^operator <o> + =)     
-    (<o> ^name go-to            
+    (<o> ^name far-goal            
          ^target <r>
-         ^place <place>)           
+         ^place unknown)           
+}
+
+#средние
+
+#близкие
+sp {movement-candidate2
+    (state <s> ^io <io>)
+    (<io> ^input-link <il>)
+    (<il> ^nearby <r>)
+    (<r> ^valence <place>
+         ^direction <dir>
+         ^name <name>)
+-->
+    (<s> ^operator <o>)
+    (<o> ^name candidate
+         ^target <name>
+         ^place <place>)
+}
+
+#выбор из кандидатов в цели
+sp {goal-candidate
+    (state <s> ^operator <o>)
+    (<o> ^name free-place
+         ^target <r>
+         ^place <place>)
+}
+
+#добавление предпочтений для удобных расположений
+sp {right-for-rights
+    (state <s> ^operator <o>)
+    (<o> ^name candidate
+         ^target <r>
+         ^place <place1>)
+    (<r> ^)
+}
+
+#все рядом, никуда идти не надо, TODO
+sp {wait
+    (state <s> ^io <io>)
+    (<io> ^input-link <il>)
+    (<il> -^away)
+    (<io> ^output-link <ol>)
+    (<ol> ^target {<st> <> stay1})
+    (<s> ^name <start>)
+-->
+    (<s> ^operator <o> < +)
+    (<o> ^name stay1)
+}
+
+sp {wait2
+    (state <s> ^io <io>)
+    (<io> ^input-link <il>)
+    (<il> -^away)
+    (<s> ^name <start>)
+    (<io> ^output-link <ol>)
+    (<ol> ^target stay1)
+-->
+    (<s> ^operator <o> < +)
+    (<o> ^name stay2)
+}
+
+sp {stay
+    (state <s> ^operator <o>)
+    (<o> ^name stay1)
+    (<s> ^io <io>)
+    (<io> ^output-link <ol>)
+    (<ol> ^target <old-target>)
+-->
+    (<ol> ^target stay1)
+    (<ol> ^target <old-target> -)
+}
+
+sp {stay2
+    (state <s> ^operator <o>)
+    (<o> ^name stay2)
+    (<s> ^io <io>)
+    (<io> ^output-link <ol>)
+    (<ol> ^target <old-target>)
+-->
+    (<ol> ^target stay2)
+    (<ol> ^target <old-target> -)
 }
 
 #определение цели
@@ -40,7 +124,8 @@ sp {move
     (<o> ^name go-to
          ^target <target>
          ^place <place>)
-    (<ol> ^target {<old-target> <> <target>}) #и с place тоже самое 
+    (<io> ^output-link <ol>)
+    (<ol> ^target {<old-target> <> <target>}) 
 -->
     (<ol> ^target <target>)
     (<ol> ^target <old-target> -)

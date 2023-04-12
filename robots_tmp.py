@@ -17,7 +17,7 @@ def cb_print_soar_message(mid, user_data, agent, message):
 class Robot:
     def __init__(self, n, x, y, direct):
         self.num = n
-        self.status = 0 #флаг-- 0-- не стоит ищет место, 1-- стоит есть место рядом, 2-- стоит мест рядом нет 
+        self.status = 0 #флаг-- 0-- не ведущий ищет место, 1-- ведущий есть место рядом, 2-- ведущий мест рядом нет 
         coord = (x, y)
         self.coord = list(coord)
         self.direct = direct #??? look gazebo относительно одной СО
@@ -41,7 +41,8 @@ class Robot:
     def soar_command_create(self, neibours):
         # neibours := list with distances to other robots 0x, 0y (including itself)
         soar_sentences = []
-        big_dist = 3
+        big_dist = 5
+        small_dist = 2
         d = int(self.direct)
             
         for nb in neibours:
@@ -51,43 +52,59 @@ class Robot:
             #coordinates where is neibour относит взгляда робота
             
             if x > 0 and y > 0:     # ./
-                if z <= big_dist:
+                if z <= small_dist:
                     soar_sentences.append("front-right nearby")
+                elif z > small_dist and z <=big_dist:
+                    soar_sentences.append("front-right middle")
                 elif z > big_dist:
                     soar_sentences.append("front-right away")
             elif x < 0 and y > 0:   # \.
                 if z <= big_dist:
                     soar_sentences.append("front-left nearby")
+                elif z > small_dist and z <=big_dist:
+                    soar_sentences.append("front-left middle")
                 elif z > big_dist:
                     soar_sentences.append("front-left away")
             elif x < 0 and y < 0:   # /'
                 if z <= big_dist:
                     soar_sentences.append("back-left nearby")
+                elif z > small_dist and z <=big_dist:
+                    soar_sentences.append("back-left middle")
                 elif z > big_dist:
                     soar_sentences.append("back-left away")
             elif x > 0 and y < 0:   # '\
                 if z <= big_dist:
                     soar_sentences.append("back-right nearby")
+                elif z > small_dist and z <=big_dist:
+                    soar_sentences.append("back-right middle")
                 elif z > big_dist:
                     soar_sentences.append("back-right away")
             elif x == 0 and y > 0: # .|
                 if y <= big_dist:
                     soar_sentences.append("front nearby")
+                elif z > small_dist and z <=big_dist:
+                    soar_sentences.append("front middle")
                 elif y > big_dist:
                     soar_sentences.append("front away")
             elif x == 0 and y < 0: # '|
                 if abs(y) <= big_dist:
                     soar_sentences.append("back nearby")
+                elif z > small_dist and z <=big_dist:
+                    soar_sentences.append("back middle")
                 elif abs(y) > big_dist:
                     soar_sentences.append("back away")
             elif x > 0 and y == 0: # .-
                 if x <= big_dist:
                     soar_sentences.append("right nearby")
+                elif z > small_dist and z <=big_dist:
+                    soar_sentences.append("right middle")
                 elif x > big_dist:
                     soar_sentences.append("right away")
             elif x < 0 and y == 0: # -.
                 if abs(x) <= big_dist:
                     soar_sentences.append("left nearby")
+                elif z > small_dist and z <=big_dist:
+                    soar_sentences.append("left middle")
                 elif abs(x) > big_dist:
                     soar_sentences.append("left away")
             elif x == 0 and y == 0: # .
@@ -122,12 +139,15 @@ class Robot:
             
             robot_link = self.agent.CreateIdWME(input_link,
                                                'near')
-            place1_link = = self.agent.CreateStringWME(robot_link,
+            place1_link = self.agent.CreateStringWME(robot_link,
                                                'place', 
                                                'left')
-            place2_link = = self.agent.CreateStringWME(robot_link,
+            place2_link = self.agent.CreateStringWME(robot_link,
                                                'place', 
                                                'right')
+            name_link = self.agent.CreateStringWME(robot_link,
+                                                   'name',
+                                                   name)
             #создание дерева пример
             
             #TODO valence_link
@@ -217,6 +237,7 @@ class Group(list):  #добавление валентностей
     
     #не было данных о не лидерах или данные о лидерах отличаличь здесь или в get_neighbourhood_alter
     def spec_soar_command_create(self, neibours):
+        #не положение лидера относительно нас, а наше положение относительно лидера
     
     def process(self): #take decisions from robots and take one desicions
         targets = []

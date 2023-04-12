@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 git add . 
-git commit -m "31.03 lattice algorithm process"
+git commit -m "12.04 lattice algorithm process"
 git push origin simple

@@ -1,4 +1,4 @@
-#инициализация с target=no
+#начало
 sp {init-robot-propose
     (state <s> ^superstate nil  #проверка, что это первое состояние (нет состояния родителя)
               -^name)           #нет имени
@@ -7,7 +7,7 @@ sp {init-robot-propose
     (<o> ^name init-system)     #с именем инициализации
 }
 
-
+#инициализация с target=no
 sp {init-robot
     (state <s> ^operator <o>)   #проверка, что есть оператор
     (<o> ^name init-system)     #с именем инициализации
